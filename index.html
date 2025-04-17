@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Cittu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f7f7f7;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    img {
+      max-width: 80%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #3498db;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Cittu</h1>
+  <img id="slideshow" src="https://via.placeholder.com/600x400?text=Immagine+1" alt="Immagine">
+  <br>
+  <button onclick="nextImage()">Prossima immagine</button>
+
+  <script>
+    const images = [
+      "https://via.placeholder.com/600x400?text=Immagine+1",
+      "https://via.placeholder.com/600x400?text=Immagine+2",
+      "https://via.placeholder.com/600x400?text=Immagine+3",
+      "https://via.placeholder.com/600x400?text=Immagine+4",
+      "https://via.placeholder.com/600x400?text=Immagine+5",
+      "https://via.placeholder.com/600x400?text=Immagine+6",
+      "https://via.placeholder.com/600x400?text=Immagine+7",
+      "https://via.placeholder.com/600x400?text=Immagine+8",
+      "https://via.placeholder.com/600x400?text=Immagine+9",
+      "https://via.placeholder.com/600x400?text=Immagine+10"
+    ];
+    let index = 0;
+
+    function nextImage() {
+      index = (index + 1) % images.length;
+      document.getElementById('slideshow').src = images[index];
+    }
+  </script>
+
+</body>
+</html>
