@@ -1,127 +1,151 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Homepage Galleria</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      margin: 0;
-      padding: 2rem;
-      background: #000000;
-    }
+<style>
+  * {
+    box-sizing: border-box;
+  }
 
-    h1 {
-      text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
-      color:white;
-    }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
 
-    main {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(300px, 1fr));
-    }
+  body {
+    font-family: Neue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    .folder {
-      cursor: pointer;
-    }
+  .viewport {
+    width: 100%;
+    height: 100%;
+    max-width: 177.78vh; /* 16 / 9 ratio */
+    aspect-ratio: 16 / 9;
+    background: #000;
+    overflow-y: auto;
+    overflow-x: hidden;
+    color: white;
+  }
 
-    .folder > img {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-    }
+  @font-face {
+    font-family: 'initial';
+    src: url('NeueKonstantGrotesk-Book.otf') format('opentype');
+  }
 
-    .sub-gallery {
-      display: none;
-      margin-top: 0.5rem;
-      grid-template-columns: repeat(2, 1fr);
-    }
+  h1 {
+    font-family: 'initial';
+    text-align: left;
+    font-size: 2.5rem;
+    color: #ffffff;
+    margin-left: 10 px;
+  }
+  h2 {
+    font-family: 'initial';
+    text-align: right;
+    font-size: 1.7rem;
+    color: #ffffff;
+    margin-right: 10px;
+  }
 
-    .sub-gallery img {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-    }
+  main {
+    display: list-item;
+  }
 
-    .folder.expanded .sub-gallery {
-      display: grid;
-    }
-  </style>
-</head>
+  .folder {
+    cursor: pointer;
+  }
+
+  .folder > img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: grid;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sub-gallery {
+    display: none;
+    margin-top: 0.5rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sub-gallery img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .folder.expanded .sub-gallery {
+    display: grid;
+  }
+</style>
 <body>
-
-  <h1>Benvenuto al nostro sito</h1>
-
-  <main>
-    <!-- Cartella 1 -->
-    <div class="folder" onclick="toggleFolder(this)">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs8g7wzv3-Z1D1hrkejS7rJVi64oq5NydhZQ&s" />
-      <div class="sub-gallery">
-        <img src="https://via.placeholder.com/300x169?text=1-1" />
-        <img src="https://via.placeholder.com/300x169?text=1-2" />
-        <img src="https://via.placeholder.com/300x169?text=1-3" />
-        <img src="https://via.placeholder.com/300x169?text=1-4" />
-      </div>
+  <div class="viewport">
+    <h1>Federico Guglielmo</h1>
+    <h2>Photos</h2>
+    <h2>Color</h2>
+    <h2>Contact</h2>
+    <main>
+ <!-- Cartella 1 -->
+ <div class="folder" onclick="toggleFolder(this)">
+    <img src="source\IMG_3756.jpg" />
+    <div class="sub-gallery">
+      <img src="https://via.placeholder.com/300x169?text=1-1" />
+      <img src="https://via.placeholder.com/300x169?text=1-2" />
+      <img src="https://via.placeholder.com/300x169?text=1-3" />
+      <img src="https://via.placeholder.com/300x169?text=1-4" />
     </div>
+  </div>
 
-    <!-- Cartella 2 -->
-    <div class="folder" onclick="toggleFolder(this)">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs8g7wzv3-Z1D1hrkejS7rJVi64oq5NydhZQ&s" />
-      <div class="sub-gallery">
-        <img src="https://via.placeholder.com/300x169?text=2-1" />
-        <img src="https://via.placeholder.com/300x169?text=2-2" />
-        <img src="https://via.placeholder.com/300x169?text=2-3" />
-        <img src="https://via.placeholder.com/300x169?text=2-4" />
-      </div>
+  <!-- Cartella 2 -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <img src="source\bau (20 di 96).jpg" />
+    <div class="sub-gallery">
+      <img src="https://via.placeholder.com/300x169?text=2-1" />
+      <img src="https://via.placeholder.com/300x169?text=2-2" />
+      <img src="https://via.placeholder.com/300x169?text=2-3" />
+      <img src="https://via.placeholder.com/300x169?text=2-4" />
     </div>
+  </div>
 
-    <!-- Cartella 3 -->
-    <div class="folder" onclick="toggleFolder(this)">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs8g7wzv3-Z1D1hrkejS7rJVi64oq5NydhZQ&s" />
-      <div class="sub-gallery">
-        <img src="https://via.placeholder.com/300x169?text=3-1" />
-        <img src="https://via.placeholder.com/300x169?text=3-2" />
-        <img src="https://via.placeholder.com/300x169?text=3-3" />
-        <img src="https://via.placeholder.com/300x169?text=3-4" />
-      </div>
+  <!-- Cartella 3 -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <img src="source\IMG_3756.jpg" />
+    <div class="sub-gallery">
+      <img src="https://via.placeholder.com/300x169?text=3-1" />
+      <img src="https://via.placeholder.com/300x169?text=3-2" />
+      <img src="https://via.placeholder.com/300x169?text=3-3" />
+      <img src="https://via.placeholder.com/300x169?text=3-4" />
     </div>
+  </div>
 
-    <!-- Cartella 4 -->
-    <div class="folder" onclick="toggleFolder(this)">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs8g7wzv3-Z1D1hrkejS7rJVi64oq5NydhZQ&s" />
-      <div class="sub-gallery">
-        <img src="https://via.placeholder.com/300x169?text=4-1" />
-        <img src="https://via.placeholder.com/300x169?text=4-2" />
-        <img src="https://via.placeholder.com/300x169?text=4-3" />
-        <img src="https://via.placeholder.com/300x169?text=4-4" />
-      </div>
+  <!-- Cartella 2 -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <img src="source\bau (20 di 96).jpg" />
+    <div class="sub-gallery">
+      <img src="https://via.placeholder.com/300x169?text=2-1" />
+      <img src="https://via.placeholder.com/300x169?text=2-2" />
+      <img src="https://via.placeholder.com/300x169?text=2-3" />
+      <img src="https://via.placeholder.com/300x169?text=2-4" />
     </div>
+  </div>
 
-    <!-- Cartella 5 -->
-    <div class="folder" onclick="toggleFolder(this)">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs8g7wzv3-Z1D1hrkejS7rJVi64oq5NydhZQ&s" />
-      <div class="sub-gallery">
-        <img src="https://via.placeholder.com/300x169?text=5-1" />
-        <img src="https://via.placeholder.com/300x169?text=5-2" />
-        <img src="https://via.placeholder.com/300x169?text=5-3" />
-        <img src="https://via.placeholder.com/300x169?text=5-4" />
-      </div>
+  <!-- Cartella 3 -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <img src="source\IMG_3756.jpg" />
+    <div class="sub-gallery">
+      <img src="https://via.placeholder.com/300x169?text=3-1" />
+      <img src="https://via.placeholder.com/300x169?text=3-2" />
+      <img src="https://via.placeholder.com/300x169?text=3-3" />
+      <img src="https://via.placeholder.com/300x169?text=3-4" />
     </div>
-
-    <!-- Cartella 6 -->
-    <div class="folder" onclick="toggleFolder(this)">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs8g7wzv3-Z1D1hrkejS7rJVi64oq5NydhZQ&s" />
-      <div class="sub-gallery">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVCpIMJ8sSi9sTP3CYSJXeWekmODCH5GX86Q&s" />
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVCpIMJ8sSi9sTP3CYSJXeWekmODCH5GX86Q&s" />
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVCpIMJ8sSi9sTP3CYSJXeWekmODCH5GX86Q&s" />
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVCpIMJ8sSi9sTP3CYSJXeWekmODCH5GX86Q&s" />
-      </div>
-    </div>
-  </main>
+  </div>
+    </main>
+  </div>
 
   <script>
     function toggleFolder(folder) {
@@ -131,6 +155,4 @@
       folder.classList.toggle('expanded');
     }
   </script>
-
 </body>
-</html>
