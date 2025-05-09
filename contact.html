@@ -36,7 +36,7 @@
 
     a:hover {
       text-decoration: underline;
-      text-decoration-color: #D4FF00;
+      text-decoration-color: #000000;
       text-decoration-thickness: 5px;
     }
 
@@ -86,7 +86,7 @@
 
     .slash {
       width: 6px;
-      height: 200px;
+      height: 170px;
       background-color: #000;
       transform: rotate(20deg);
     }
@@ -98,6 +98,18 @@
       font-weight: bold;
       font-size: 1.2rem;
     }
+    .folder {
+    cursor: pointer;
+  }
+
+  .folder > img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: grid;
+    margin: 0;
+    padding: 0;
+  }
     @media (max-width: 660px) {
   .container {
     flex-direction: column;
@@ -143,12 +155,37 @@
         </div>
 
         <div class="menutext">
-          <a href="bis.html"><h2>Photos</h2></a>
-          <a href="bis.html"><h2>Color</h2></a>
-          <a href="bis.html"><h2>Contact</h2></a>
+          <a href="photos.html"><h2>Photos</h2></a>
+          <a href="color.html"><h2>Color</h2></a>
+          <a href="contact.html"><h2>Contact</h2></a>
         </div>
       </div>
     </div>
+    <!-- Cartella 1 -->
+ <div class="folder" onclick="toggleFolder(this)">
+    <img src="source\IMG_3756.jpg" />
+  </div>
+
+  <!-- Cartella 2 -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <img src="source\bau (20 di 96).jpg" />
+  </div>
+
+  <!-- Cartella 3 -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <img src="source\IMG_3756.jpg" />
+  </div>
+
+  <!-- Cartella 2 -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <img src="source\bau (20 di 96).jpg" />
+  </div>
+
+  <!-- Cartella 3 -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <img src="source\IMG_3756.jpg" />
+    
+  </div>
   </div>
 </body>
 </html>
