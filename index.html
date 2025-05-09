@@ -1,3 +1,5 @@
+
+<!DOCTYPE html>
 <style>
   * {
     box-sizing: border-box;
@@ -34,13 +36,23 @@
     font-family: 'initial';
     src: url('NeueKonstantGrotesk-Book.otf') format('opentype');
   }
+  a{
+  text-decoration: none; /* rimuove la sottolineatura di default */
+  }
 
+  a:hover {
+    text-decoration: underline; /* aggiunge la sottolineatura al passaggio del mouse */
+    text-decoration-color: #D4FF00;
+    text-decoration-thickness: 5px;
+  }
   h1 {
     font-family: 'initial';
     text-align: left;
     font-size: 2.5rem;
     color: #ffffff;
     margin-left: 10 px;
+    border-right-color: #D4FF00;
+    border-right-width: 10px;
   }
   h2 {
     font-family: 'initial';
@@ -48,6 +60,7 @@
     font-size: 1.7rem;
     color: #ffffff;
     margin-right: 10px;
+    user-select: none;
   }
 
   main {
@@ -66,82 +79,50 @@
     margin: 0;
     padding: 0;
   }
-
-  .sub-gallery {
-    display: none;
-    margin-top: 0.5rem;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .sub-gallery img {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-  }
-
-  .folder.expanded .sub-gallery {
-    display: grid;
-  }
 </style>
 <body>
   <div class="viewport">
     <h1>Federico Guglielmo</h1>
-    <h2>Photos</h2>
-    <h2>Color</h2>
-    <h2>Contact</h2>
+    <a href="bis.html"><h2>Photos</h2></a>
+    <a href="bis.html"><h2>Color</h2></a>
+    <a href="bis.html"><h2>Contact</h2></a>
     <main>
  <!-- Cartella 1 -->
  <div class="folder" onclick="toggleFolder(this)">
+    <img src="source\IMG_3756.jpg" />
+    <div class="sub-gallery">
+    </div>
+  </div>
+
+  <!-- Cartella 2 -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <img src="source\bau (20 di 96).jpg" />
+    <div class="sub-gallery">
+    </div>
+  </div>
+
+  <!-- Cartella 3 -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <img src="source\IMG_3756.jpg" />
+    <div class="sub-gallery">
+    </div>
+  </div>
+
+  <!-- Cartella 2 -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <img src="source\bau (20 di 96).jpg" />
+    <div class="sub-gallery">
+    </div>
+  </div>
+
+  <!-- Cartella 3 -->
+  <div class="folder" onclick="toggleFolder(this)">
     <img src="source\IMG_3756.jpg" />
     <div class="sub-gallery">
       <img src="https://via.placeholder.com/300x169?text=1-1" />
       <img src="https://via.placeholder.com/300x169?text=1-2" />
       <img src="https://via.placeholder.com/300x169?text=1-3" />
       <img src="https://via.placeholder.com/300x169?text=1-4" />
-    </div>
-  </div>
-
-  <!-- Cartella 2 -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <img src="source\bau (20 di 96).jpg" />
-    <div class="sub-gallery">
-      <img src="https://via.placeholder.com/300x169?text=2-1" />
-      <img src="https://via.placeholder.com/300x169?text=2-2" />
-      <img src="https://via.placeholder.com/300x169?text=2-3" />
-      <img src="https://via.placeholder.com/300x169?text=2-4" />
-    </div>
-  </div>
-
-  <!-- Cartella 3 -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <img src="source\IMG_3756.jpg" />
-    <div class="sub-gallery">
-      <img src="https://via.placeholder.com/300x169?text=3-1" />
-      <img src="https://via.placeholder.com/300x169?text=3-2" />
-      <img src="https://via.placeholder.com/300x169?text=3-3" />
-      <img src="https://via.placeholder.com/300x169?text=3-4" />
-    </div>
-  </div>
-
-  <!-- Cartella 2 -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <img src="source\bau (20 di 96).jpg" />
-    <div class="sub-gallery">
-      <img src="https://via.placeholder.com/300x169?text=2-1" />
-      <img src="https://via.placeholder.com/300x169?text=2-2" />
-      <img src="https://via.placeholder.com/300x169?text=2-3" />
-      <img src="https://via.placeholder.com/300x169?text=2-4" />
-    </div>
-  </div>
-
-  <!-- Cartella 3 -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <img src="source\IMG_3756.jpg" />
-    <div class="sub-gallery">
-      <img src="https://via.placeholder.com/300x169?text=3-1" />
-      <img src="https://via.placeholder.com/300x169?text=3-2" />
-      <img src="https://via.placeholder.com/300x169?text=3-3" />
-      <img src="https://via.placeholder.com/300x169?text=3-4" />
     </div>
   </div>
     </main>
