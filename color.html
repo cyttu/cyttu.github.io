@@ -54,11 +54,11 @@
       margin: 10px 0;
       user-select: none;
     }
-.overlay-menu h3 {
-  font-size: 18vw; /* Scala con la larghezza dello schermo */
-  margin: 10px;
-  font-family: 'initial';
-  color: #D4FF00;
+      .overlay-menu h3 {
+        font-size: 18vw; /* Scala con la larghezza dello schermo */
+        margin: 10px;
+        font-family: 'initial';
+        color: #D4FF00;
 }
     .viewport {
       width: 100%;
@@ -69,6 +69,9 @@
       overflow-y: auto;
       overflow-x: hidden;
       color: white;
+       padding: 0;
+    margin: 0;
+      gap:0;
     }
 
     .containertesto {
@@ -103,18 +106,23 @@
       font-weight: bold;
       font-size: 1.2rem;
     }
-    .folder {
-    cursor: pointer;
-  }
+.folder {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: block; /* rimuove effetti indesiderati inline */
+}
 
-  .folder > img {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    display: grid;
-    margin: 0;
-    padding: 0;
-  }
+.folder > img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block; /* evita spazio sotto le immagini */
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
 
    .trigger {
       width: 200px;
@@ -202,42 +210,42 @@
       </div>
     </div>
     <!-- Cartella 1 -->
- <div class="folder" onclick="toggleFolder(this)">
+ <div class="folder">
     <img src="source\IMG_3756.jpg" />
-    <div class="overlay-menu" id="overlayMenu">
+    <div class="overlay-menu">
       <h3>Gustavo Lima</h3>
     </div>
   </div>
 
   <!-- Cartella 2 -->
-  <div class="folder" onclick="toggleFolder(this)">
+  <div class="folder">
     <img src="source\bau (20 di 96).jpg" />
-        <div class="overlay-menu" id="overlayMenu">
-      <h3>Gustavo Lima</h3>
+      <div class="overlay-menu">
+        <h3>e você</h3>
     </div>
   </div>
 
   <!-- Cartella 3 -->
-  <div class="folder" onclick="toggleFolder(this)">
+  <div class="folder">
     <img src="source\IMG_3756.jpg" />
-        <div class="overlay-menu" id="overlayMenu">
-      <h3>Gustavo Lima</h3>
+        <div class="overlay-menu">
+      <h3>Tchê tcherere</h3>
     </div>
   </div>
 
   <!-- Cartella 2 -->
-  <div class="folder" onclick="toggleFolder(this)">
+  <div class="folder">
     <img src="source\bau (20 di 96).jpg" />
-        <div class="overlay-menu" id="overlayMenu">
-      <h3>Gustavo Lima</h3>
+        <div class="overlay-menu">
+      <h3>Tcherere tchê tchê</h3>
     </div>
   </div>
 
   <!-- Cartella 3 -->
-  <div class="folder" onclick="toggleFolder(this)">
+  <div class="folder">
     <img src="source\IMG_3756.jpg" />
-        <div class="overlay-menu" id="overlayMenu">
-      <h3>Gustavo Lima</h3>
+        <div class="overlay-menu">
+      <h3>Tcherere tchê tchê</h3>
     </div>
     
   </div>
