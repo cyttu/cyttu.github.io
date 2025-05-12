@@ -3,179 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: black;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      min-width: 300px;
-    }
-
-    body {
-      font-family: 'initial', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-   }
-
-    @font-face {
-      font-family: 'initial';
-      src: url('NeueKonstantGrotesk-Book.otf') format('opentype');
-    }
-
-    a {
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-      text-decoration-color: #000000;
-      text-decoration-thickness: 5px;
-    }
-
-    h1 {
-      font-family: 'initial';
-      font-size: 2.5rem;
-      color: #ffffff;
-      margin-left: 10px;
-    }
-
-    h2 {
-      font-family: 'initial';
-      font-size: 1.7rem;
-      color: #000000;
-      margin: 10px 0;
-      user-select: none;
-    }
-      .overlay-menu h3 {
-        font-size: 18vw; /* Scala con la larghezza dello schermo */
-        margin: 10px;
-        font-family: 'initial';
-        color: #D4FF00;
-}
-    .viewport {
-      width: 100%;
-      height: 100%;
-      max-width: 177.78vh; /* 16:9 ratio */
-      aspect-ratio: 16 / 9;
-      background: #000;
-      overflow-y: auto;
-      overflow-x: hidden;
-      color: white;
-       padding: 0;
-    margin: 0;
-      gap:0;
-    }
-
-    .containertesto {
-      background-color: #D4FF00;
-      padding: 20px;
-    }
-
-    .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .containerbarre {
-      display: flex;
-      gap: 20px;
-      padding: 20px;
-      overflow: hidden;
-    }
-
-    .slash {
-      width: 6px;
-      height: 170px;
-      background-color: #000;
-      transform: rotate(20deg);
-    }
-
-    .menutext {
-      display: flex;
-      flex-direction: column;
-      text-align: right;
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-.folder {
-  position: relative;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  display: block; /* rimuove effetti indesiderati inline */
-}
-
-.folder > img {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  display: block; /* evita spazio sotto le immagini */
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-
-   .trigger {
-      width: 200px;
-      height: 100px;
-      background-color: #3498db;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      position: relative;
-    }
-    .folder {
-      position: relative;
-      display: inline-block;
-    }
-.overlay-menu {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 0;
-  margin: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #ffffff;
-  display: none;
-  justify-content: flex-end;
-  align-items: flex-start;
-  flex-direction: column;
-} 
-
-    .overlay-menu.show {
-      display: flex;
-    }
-    @media (max-width: 660px) {
-    .container {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .containerbarre {
-      margin-bottom: 20px;
-    }
-
-  .menutext {
-    text-align: center;
-  }
-}
-  </style>
+  <title>Home</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="viewport">
+  <div class="viewport-inner">
     <h1>Federico Guglielmo</h1>
     <div class="containertesto">
       <div class="container">
@@ -209,6 +42,7 @@
         </div>
       </div>
     </div>
+    
     <!-- Cartella 1 -->
  <div class="folder">
     <img src="source\IMG_3756.jpg" />
@@ -216,12 +50,11 @@
       <h3>Gustavo Lima</h3>
     </div>
   </div>
-
   <!-- Cartella 2 -->
   <div class="folder">
     <img src="source\bau (20 di 96).jpg" />
       <div class="overlay-menu">
-        <h3>e você</h3>
+        <h3>e vocè</h3>
     </div>
   </div>
 
@@ -237,7 +70,7 @@
   <div class="folder">
     <img src="source\bau (20 di 96).jpg" />
         <div class="overlay-menu">
-      <h3>Tcherere tchê tchê</h3>
+      <h3>Tcherere tchê</h3>
     </div>
   </div>
 
@@ -245,41 +78,11 @@
   <div class="folder">
     <img src="source\IMG_3756.jpg" />
         <div class="overlay-menu">
-      <h3>Tcherere tchê tchê</h3>
+      <h3>Tcherere tchê</h3>
     </div>
-    
+    </div>
   </div>
   </div>
-
-      <script>
-      document.querySelectorAll('.folder').forEach(folder => {
-        const menu = folder.querySelector('.overlay-menu');
-        if (!menu) return;
-
-        // Hover desktop
-        folder.addEventListener('mouseenter', () => {
-          menu.classList.add('show');
-        });
-
-        folder.addEventListener('mouseleave', () => {
-          menu.classList.remove('show');
-        });
-
-        // Touch mobile
-        folder.addEventListener('touchstart', (e) => {
-          e.stopPropagation();
-          menu.classList.toggle('show');
-        });
-      });
-
-      // Chiude i menu se si tocca fuori
-      document.addEventListener('touchstart', (e) => {
-        document.querySelectorAll('.overlay-menu.show').forEach(menu => {
-          if (!menu.parentElement.contains(e.target)) {
-            menu.classList.remove('show');
-          }
-        });
-      });
-    </script>
+      <script src="menuscript.js"></script>
 </body>
 </html>
