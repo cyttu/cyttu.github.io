@@ -50,12 +50,19 @@ h2 {
 }
 
 .overlay-menu h3 {
-  font-size: 18vw;
+  font-size: clamp(2rem, 10vw, 18vw);
   margin: 10px;
   font-family: 'initial';
   color: #D4FF00;
 }
 
+.arrow {
+  position: absolute;
+  bottom: 3.3rem;
+  right: 2.3rem;
+  width: 60px;
+  height: 60px;
+}
 .viewport {
   position: fixed;
   top: 0;
