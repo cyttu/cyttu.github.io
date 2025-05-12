@@ -1,0 +1,138 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: black;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  min-width: 300px;
+}
+
+body {
+  font-family: 'initial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@font-face {
+  font-family: 'initial';
+  src: url('NeueKonstantGrotesk-Book.otf') format('opentype');
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-decoration-color: #000000;
+  text-decoration-thickness: 5px;
+}
+
+h1 {
+  font-family: 'initial';
+  font-size: 2.5rem;
+  color: #ffffff;
+  margin-left: 10px;
+}
+
+h2 {
+  font-family: 'initial';
+  font-size: 1.7rem;
+  color: #000000;
+  margin: 10px 0;
+  user-select: none;
+}
+
+h3{
+    font-family: 'initial';
+  font-size: 1.2rem;
+  color: #ffffff;
+  margin-left: 10px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.viewport {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  color: white;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.viewport-inner {
+  width: 100%;
+  max-width: 177.78vh;
+  aspect-ratio: 16 / 9;
+}
+
+.containertesto {
+  background-color: #D4FF00;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.containerbarre {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.slash {
+  width: 6px;
+  height: 170px;
+  background-color: #000;
+  transform: rotate(20deg);
+}
+
+.menutext {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.icons{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+
+}
+
+@media (max-width: 660px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .containerbarre {
+    margin-bottom: 20px;
+  }
+
+  .menutext {
+    text-align: center;
+  }
+}
