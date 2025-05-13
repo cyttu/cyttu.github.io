@@ -50,19 +50,21 @@ h2 {
 }
 
 .overlay-menu h3 {
-  font-size: clamp(2rem, 10vw, 18vw);
-  margin: 10px;
+  font-size: clamp(3vw, 10vw, 18vw);
+  margin: 3vw;
   font-family: 'initial';
   color: #D4FF00;
 }
 
 .arrow {
-  position: absolute;
-  bottom: 3.3rem;
-  right: 2.3rem;
-  width: 60px;
-  height: 60px;
+  display: flex;
+  justify-content: flex-end;  /* spinge il contenuto a destra */
+  align-items: center; 
+
+  width: 20vw;  /* larghezza della freccia proporzionale al contenitore */
+  height: 20vw; /* mantiene le proporzioni dell'immagine se è un SVG o simile */
 }
+
 .viewport {
   position: fixed;
   top: 0;
