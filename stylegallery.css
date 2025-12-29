@@ -56,13 +56,28 @@ h2 {
   color: #D4FF00;
 }
 
-.arrow {
+/* Layout: viewport and inner container */
+.viewport {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  color: white;
+  padding: 0;
+  margin: 0;
   display: flex;
-  justify-content: flex-end;  /* spinge il contenuto a destra */
-  align-items: center; 
+  justify-content: center;
+  align-items: flex-start;
+}
 
-  width: 20vw;  /* larghezza della freccia proporzionale al contenitore */
-  height: 20vw; /* mantiene le proporzioni dell'immagine se è un SVG o simile */
+.viewport-inner {
+  width: 100%;
+  max-width: 177.78vh;
+  aspect-ratio: 16 / 9;
 }
 
 .viewport {
@@ -185,7 +200,13 @@ h2 {
   margin-top: 1rem;
 }
 
+/* Arrow: layout + entrance animation (merged from two rules) */
 .arrow {
+  display: flex;
+  justify-content: flex-end; /* spinge il contenuto a destra */
+  align-items: center;
+  width: 20vw; /* larghezza della freccia proporzionale al contenitore */
+  height: 20vw; /* mantiene le proporzioni dell'immagine se è un SVG o simile */
   position: relative;
   opacity: 0;
   transform: translateX(-100px);
@@ -208,6 +229,82 @@ h2 {
     transform: translateX(0);
     opacity: 1;
   }
+}
+
+/* Carousel styles: fills the overlay and provides two horizontal pages with 4 images each */
+.carousel {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+.carousel-track {
+  display: flex;
+  width: 200%; /* two pages: 100% each */
+  height: 100%;
+  transition: transform 300ms ease;
+}
+.carousel-page {
+  min-width: 50%; /* each page takes 50% of track (200% total = 2 pages) */
+  box-sizing: border-box;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;
+  gap: 10px;
+  align-items: stretch;
+  aspect-ratio: 16 / 9;
+}
+.carousel-page img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  aspect-ratio: 16 / 9;
+}
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: none;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.carousel-nav.left { left: 8px; }
+.carousel-nav.right { right: 8px; }
+.carousel-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+.carousel-dots button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  border: none;
+}
+.carousel-dots button.active { background: #D4FF00; }
+
+/* Focus styles for accessibility */
+.carousel-nav:focus-visible {
+  outline: 3px solid #D4FF00;
+  outline-offset: 2px;
+}
+.carousel-dots button:focus-visible {
+  outline: 2px solid #D4FF00;
 }
 @media (max-width: 660px) {
   .container {
