@@ -1,13 +1,21 @@
+/* ==========================================================================
+   1. GLOBAL & RESET
+   ========================================================================== */
 * {
   box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'initial';
+  src: url('NeueKonstantGrotesk-Book.otf') format('opentype');
 }
 
 html, body {
   margin: 0;
   padding: 0;
-  background: black;
   width: 100%;
   height: 100%;
+  background: black;
   overflow: hidden;
   min-width: 300px;
 }
@@ -19,13 +27,9 @@ body {
   align-items: center;
 }
 
-@font-face {
-  font-family: 'initial';
-  src: url('NeueKonstantGrotesk-Book.otf') format('opentype');
-}
-
 a {
   text-decoration: none;
+  transition: all 0.2s ease;
 }
 
 a:hover {
@@ -34,29 +38,9 @@ a:hover {
   text-decoration-thickness: 5px;
 }
 
-h1 {
-  font-family: 'initial';
-  font-size: 2.5rem;
-  color: #ffffff;
-  margin-left: 10px;
-}
-
-h2 {
-  font-family: 'initial';
-  font-size: 1.7rem;
-  color: #000000;
-  margin: 10px 0;
-  user-select: none;
-}
-
-.overlay-menu h3 {
-  font-size: clamp(3vw, 10vw, 18vw);
-  margin: 3vw;
-  font-family: 'initial';
-  color: #D4FF00;
-}
-
-/* Layout: viewport and inner container */
+/* ==========================================================================
+   2. MAIN LAYOUT (Viewport & Containers)
+   ========================================================================== */
 .viewport {
   position: fixed;
   top: 0;
@@ -67,8 +51,6 @@ h2 {
   overflow-y: scroll;
   overflow-x: hidden;
   color: white;
-  padding: 0;
-  margin: 0;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -76,92 +58,191 @@ h2 {
 
 .viewport-inner {
   width: 100%;
-  max-width: 177.78vh;
-  aspect-ratio: 16 / 9;
-}
-
-.viewport {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #000;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  color: white;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.viewport-inner {
-  width: 100%;
-  max-width: 177.78vh;
+  max-width: 177.78vh; /* Mantiene l'aspect ratio 16:9 */
   aspect-ratio: 16 / 9;
 }
 
 .gallery {
   display: flex;
   flex-wrap: wrap;
-  gap: 0; /* Rimuove spazio tra le immagini */
+  width: 100%;
 }
 
+/* ==========================================================================
+   3. FOLDER STRUCTURE (Row Setup)
+   ========================================================================== */
 .folder {
-  flex: 1 0 auto;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  width: 100%;
-}
-
-.folder > img {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  display: block;
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-
-.trigger {
-  width: 200px;
-  height: 100px;
-  background-color: #3498db;
-  color: white;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+  width: 100%;
+  aspect-ratio: 19 / 9; /* Forza la riga intera in 16/9 */
   position: relative;
+  background: #000;
+  overflow: hidden;
 }
 
+.folder-visual {
+  width: 70%;
+  height: 100%; /* Prende l'altezza del padre che è 16/9 */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Lato Destro: Testo e Menu (30%) */
 .overlay-menu {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 0;
-  margin: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #ffffff;
-  display: none;
-  justify-content: flex-end;
-  align-items: flex-start;
+  width: 30%;
+  height: 100%;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
-.overlay-menu.show {
-  display: flex;
+/* ==========================================================================
+   4. COVER IMAGE & CAROUSEL LOGIC
+   ========================================================================== */
+
+/* Immagine di Copertina */
+.cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Riempie il box 16/9 senza distorcere */
+  aspect-ratio: 16 / 9; 
+  display: block;
+  cursor: pointer;
 }
+
+.cover-image:hover {
+  opacity: 0.9;
+}
+
+/* Carosello (Nascosto di default) */
+.carousel {
+  display: none;
+  width: 100%;
+  height: 100%; /* Coincide con il box della copertina */
+  position: relative;
+}
+
+.folder-visual.active .carousel {
+  display: block;
+}
+
+/* Stato Attivo (Switch tra Copertina e Carosello) */
+.folder-visual.active .cover-image {
+  display: none;
+}
+
+
+/* Track e Pagine del Carosello */
+.carousel-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.3s ease-in-out; /* Aggiunge fluidità al movimento */
+  width: 100%; /* La larghezza base, flexbox gestirà l'espansione */
+}
+
+/* Page: Ogni pagina deve occupare il 100% della larghezza del genitore visibile */
+.carousel-page {
+  min-width: 100%; /* FORZA la pagina ad essere larga quanto tutto il carosello */
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  flex-shrink: 0; /* Impedisce alle pagine di restringersi se ce ne sono tante */
+}
+
+.carousel-page img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;   /* Fondamentale: l'immagine si taglia ma non si schiaccia */
+  aspect-ratio: 16 / 9; /* Ogni miniatura della griglia è 16/9 */
+  display: block;
+}
+
+/* Navigazione UI */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: none;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.carousel-nav.left { left: 8px; }
+.carousel-nav.right { right: 8px; }
+.carousel-nav:hover { background: #D4FF00; color: #000; }
+
+.close-carousel {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.6);
+  color: #D4FF00;
+  border: none;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.carousel-dots button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  border: none;
+  cursor: pointer;
+}
+
+.carousel-dots button.active { 
+  background: #D4FF00; 
+}
+
+/* ==========================================================================
+   5. UI COMPONENTS (Typography, Bars, Icons)
+   ========================================================================== */
+h1 { font-size: 2.5rem; color: #ffffff; margin-left: 10px; }
+h2 { font-size: 1.7rem; color: #000; margin: 10px 0; user-select: none; }
+
+.overlay-menu h3 {
+  font-size: clamp(1rem, 8vw, 6vw);
+  margin: 0;
+  color: #D4FF00;
+  line-height: 1.1;
+}
+
+.overlay-menu h4 {
+  font-size: clamp(1rem, 8vw, 6vw);
+  margin: 0;
+  color: #D4FF00;
+  line-height: 1.1;
+}
+
 
 .containertesto {
   background-color: #D4FF00;
   padding: 20px;
+  color: black;
+  width: 100%;
 }
 
 .container {
@@ -189,136 +270,37 @@ h2 {
   flex-direction: column;
   text-align: right;
   font-weight: bold;
-  font-size: 1.2rem;
 }
 
-
-.containerfrecce {
-  position: relative;
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-/* Arrow: layout + entrance animation (merged from two rules) */
-.arrow {
-  display: flex;
-  justify-content: flex-end; /* spinge il contenuto a destra */
-  align-items: center;
-  width: 20vw; /* larghezza della freccia proporzionale al contenitore */
-  height: 20vw; /* mantiene le proporzioni dell'immagine se è un SVG o simile */
-  position: relative;
-  opacity: 0;
-  transform: translateX(-100px);
-  animation: slideIn 1s ease-out forwards;
-}
-
-/* Ritardi per effetto cascata */
-.delay-0 {
-  animation-delay: 0s;
-}
-.delay-1 {
-  animation-delay: 0.2s;
-}
-.delay-2 {
-  animation-delay: 0.4s;
+/* ==========================================================================
+   6. ANIMATIONS & RESPONSIVE
+   ========================================================================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideIn {
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  to { transform: translateX(0); opacity: 1; }
 }
 
-/* Carousel styles: fills the overlay and provides two horizontal pages with 4 images each */
-.carousel {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
-.carousel-track {
-  display: flex;
-  width: 200%; /* two pages: 100% each */
-  height: 100%;
-  transition: transform 300ms ease;
-}
-.carousel-page {
-  min-width: 50%; /* each page takes 50% of track (200% total = 2 pages) */
-  box-sizing: border-box;
-  padding: 20px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-rows: 1fr;
-  gap: 10px;
-  align-items: stretch;
-  aspect-ratio: 16 / 9;
-}
-.carousel-page img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  aspect-ratio: 16 / 9;
-}
-.carousel-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.5);
-  color: #fff;
-  border: none;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.carousel-nav.left { left: 8px; }
-.carousel-nav.right { right: 8px; }
-.carousel-dots {
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-}
-.carousel-dots button {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.4);
-  border: none;
-}
-.carousel-dots button.active { background: #D4FF00; }
-
-/* Focus styles for accessibility */
-.carousel-nav:focus-visible {
-  outline: 3px solid #D4FF00;
-  outline-offset: 2px;
-}
-.carousel-dots button:focus-visible {
-  outline: 2px solid #D4FF00;
-}
 @media (max-width: 660px) {
+  .folder {
+    flex-direction: column;
+    height: auto;
+    aspect-ratio: auto;
+  }
+  .folder-visual, .overlay-menu {
+    width: 100%;
+  }
+  .folder-visual {
+    aspect-ratio: 16/9;
+  }
   .container {
     flex-direction: column;
-    align-items: center;
   }
-
-  .containerbarre {
-    margin-bottom: 20px;
-  }
-
   .menutext {
     text-align: center;
+    margin-top: 15px;
   }
-
-
 }

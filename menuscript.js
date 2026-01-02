@@ -1,224 +1,99 @@
-// Funzione di supporto per distinguere il touch
-function isTouchDevice() {
-  return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-}
+document.querySelectorAll('.folder-visual').forEach(visualContainer => {
+    const coverImage = visualContainer.querySelector('.cover-image');
+    const closeBtn = visualContainer.querySelector('.close-carousel');
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.folder').forEach(folder => {
-    const menu = folder.querySelector('.overlay-menu');
-    if (!menu) return;
-    // conserva l'HTML originale per poterlo ripristinare
-    menu._originalHTML = menu.innerHTML;
+    // 1. APERTURA: Se clicco sulla copertina
+    if (coverImage) {
+        coverImage.addEventListener('click', (e) => {
+            // Blocchiamo la propagazione (altrimenti il document listener chiuderebbe SUBITO quello che stiamo aprendo)
+            e.stopPropagation(); 
+            
+            // NOVITÀ: Prima di aprirmi, cerco se c'è qualcun altro aperto e lo chiudo
+            document.querySelectorAll('.folder-visual.active').forEach(activeContainer => {
+                // Rimuovo active da tutti gli altri container
+                activeContainer.classList.remove('active');
+            });
 
-    // Resetta la posizione quando si riapre
-    const resetMenuPosition = () => {
-      menu.classList.remove('slide-left');
-    };
-
-    if (isTouchDevice()) {
-      // SOLO su dispositivi touch: attiva con click
-      folder.addEventListener('click', (e) => {
-        // Se clicco sulla freccia, non fare toggle ma gestisci solo lo slide
-        if (e.target.closest('.arrow-button')) return;
-
-        e.stopPropagation();
-        resetMenuPosition();
-        menu.classList.toggle('show');
-        if (menu.classList.contains('show')) {
-          buildCarousel(menu, folder);
-        }
-      });
-    } else {
-      // Su PC: hover mostra l'overlay, click sulla freccia per lo slide
-      folder.addEventListener('mouseenter', () => {
-        resetMenuPosition();
-        menu.classList.add('show');
-      });
-
-      folder.addEventListener('mouseleave', () => {
-        // Non chiudere immediatamente, altrimenti non si fa in tempo a cliccare la freccia
-        setTimeout(() => {
-          if (!menu.classList.contains('slide-left')) {
-            menu.classList.remove('show');
-          }
-        }, 200);
-      });
-      // also open carousel on click with mouse
-      folder.addEventListener('click', (e) => {
-        if (e.target.closest('.arrow-button')) return;
-        e.stopPropagation();
-        resetMenuPosition();
-        menu.classList.add('show');
-        buildCarousel(menu, folder);
-      });
+            // Ora apro quello corrente
+            visualContainer.classList.add('active');
+        });
     }
-  });
 
-  // Mostra automaticamente l'overlay della cartella centrale su touch
-  if (isTouchDevice()) {
-    const centralFolder = document.querySelector('.folder.center');
-    const menu = centralFolder?.querySelector('.overlay-menu');
-    if (menu) {
-      menu.classList.add('no-transition', 'show');
-      // Rimuove la classe dopo il rendering per non interferire con animazioni future
-      setTimeout(() => {
-        menu.classList.remove('no-transition');
-      }, 50);
+    // 2. CHIUSURA (X) - Questo rimane uguale
+    if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            visualContainer.classList.remove('active');
+        });
     }
-  }
 });
-
-// Gestione della freccia (funziona sia su mobile che PC)
-document.querySelectorAll('.arrow-button').forEach(button => {
-  button.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const overlay = button.closest('.overlay-menu');
-    overlay.classList.add('slide-left');
-
-    overlay.addEventListener('transitionend', () => {
-      overlay.classList.remove('show', 'slide-left');
-    }, { once: true });
-  });
-});
-
-// Chiude i menu se si clicca/tocca fuori (tranne su touch per il centrale)
+// CHIUSURA (CLICK OUTSIDE): Gestione click fuori dal carosello
 document.addEventListener('click', (e) => {
-  document.querySelectorAll('.overlay-menu.show').forEach(menu => {
-    const parentFolder = menu.closest('.folder');
-    const isCentral = parentFolder?.classList.contains('center');
-    if (!parentFolder.contains(e.target) && (!isTouchDevice() || !isCentral)) {
-      menu.classList.remove('show', 'slide-left');
-    }
-  });
+    // Cerchiamo tutti i container attualmente aperti
+    document.querySelectorAll('.folder-visual.active').forEach(activeContainer => {
+        // Se l'elemento cliccato (e.target) NON è dentro il container attivo
+        if (!activeContainer.contains(e.target)) {
+            activeContainer.classList.remove('active');
+        }
+    });
 });
 
-/* Build a simple two-page carousel (4 images per page) inside the overlay `menu`.
-   - If the folder has `data-carousel` attribute (comma-separated URLs), use it.
-   - Otherwise, pick 8 images from the page starting at this folder's image.
-*/
-function buildCarousel(menu, folder) {
-  if (menu.querySelector('.carousel')) return; // già costruito
+// GESTIONE NAVIGAZIONE CAROSELLO (Dinamico)
+document.querySelectorAll('.carousel').forEach(carousel => {
+    const track = carousel.querySelector('.carousel-track');
+    const dots = carousel.querySelectorAll('.dot');
+    const btnLeft = carousel.querySelector('.carousel-nav.left');
+    const btnRight = carousel.querySelector('.carousel-nav.right');
+    
+    if (!track) return;
 
-  // ottieni sorgenti immagini
-  let images = [];
-  if (folder.dataset.carousel) {
-    images = folder.dataset.carousel.split(',').map(s => s.trim()).filter(Boolean);
-  }
+    // Contiamo quante pagine ci sono realmente nel HTML
+    const pages = track.querySelectorAll('.carousel-page');
+    const maxPage = pages.length - 1; // Se ho 3 pagine, l'indice massimo è 2 (0, 1, 2)
+    let currentPage = 0;
 
-  if (images.length < 8) {
-    // raccogli tutte le immagini delle cartelle nella pagina
-    const allImgs = Array.from(document.querySelectorAll('.folder > img')).map(i => i.src);
-    const thisImg = folder.querySelector('img')?.src;
-    let start = Math.max(0, allImgs.indexOf(thisImg));
-    if (start === -1) start = 0;
-    for (let i = 0; images.length < 8 && allImgs.length > 0 && i < 8; i++) {
-      images.push(allImgs[(start + i) % allImgs.length]);
+    function updateCarousel() {
+      // Ora ci spostiamo del 100% per ogni pagina, non del 50%
+      track.style.transform = `translateX(-${currentPage * 100}%)`;
+      
+      // Aggiorna i pallini (se presenti)
+      dots.forEach((dot, index) => {
+        if(dot) dot.classList.toggle('active', index === currentPage);
+      });
+      
+      // Opzionale: Nascondi le frecce se sei al limite (UI più pulita)
+      if(btnLeft) btnLeft.style.opacity = currentPage === 0 ? '0.3' : '1';
+      if(btnRight) btnRight.style.opacity = currentPage === maxPage ? '0.3' : '1';
     }
-  }
 
-  // assicurati di avere almeno 8 immagini (duplica se necessario)
-  while (images.length < 8) images.push(images[images.length % images.length || 0]);
+    // Inizializza stato frecce
+    updateCarousel();
 
-  // costruisci il DOM del carosello
-  const carousel = document.createElement('div');
-  carousel.className = 'carousel';
-
-  const track = document.createElement('div');
-  track.className = 'carousel-track';
-
-  for (let p = 0; p < 2; p++) {
-    const page = document.createElement('div');
-    page.className = 'carousel-page';
-    for (let i = 0; i < 4; i++) {
-      const img = document.createElement('img');
-      img.src = images[p * 4 + i] || images[(p * 4 + i) % images.length];
-      img.alt = '';
-      page.appendChild(img);
-    }
-    track.appendChild(page);
-  }
-
-  carousel.appendChild(track);
-
-  // navigation
-  const left = document.createElement('button');
-  left.className = 'carousel-nav left';
-  left.innerHTML = '&#9664;';
-  const right = document.createElement('button');
-  right.className = 'carousel-nav right';
-  right.innerHTML = '&#9654;';
-  carousel.appendChild(left);
-  carousel.appendChild(right);
-
-  // dots
-  const dots = document.createElement('div');
-  dots.className = 'carousel-dots';
-  const dot0 = document.createElement('button');
-  const dot1 = document.createElement('button');
-  dot0.className = 'active';
-  dots.appendChild(dot0);
-  dots.appendChild(dot1);
-  carousel.appendChild(dots);
-
-  // stato
-  let pageIndex = 0;
-  const update = () => {
-    track.style.transform = `translateX(${pageIndex * -50}%)`;
-    dot0.classList.toggle('active', pageIndex === 0);
-    dot1.classList.toggle('active', pageIndex === 1);
-  };
-
-  left.addEventListener('click', (e) => { e.stopPropagation(); pageIndex = Math.max(0, pageIndex - 1); update(); });
-  right.addEventListener('click', (e) => { e.stopPropagation(); pageIndex = Math.min(1, pageIndex + 1); update(); });
-  dot0.addEventListener('click', (e) => { e.stopPropagation(); pageIndex = 0; update(); });
-  dot1.addEventListener('click', (e) => { e.stopPropagation(); pageIndex = 1; update(); });
-
-  // swipe support
-  let startX = 0;
-  track.addEventListener('touchstart', (ev) => { startX = ev.touches[0].clientX; }, { passive: true });
-  track.addEventListener('touchend', (ev) => {
-    const dx = ev.changedTouches[0].clientX - startX;
-    if (dx > 50) { pageIndex = Math.max(0, pageIndex - 1); update(); }
-    else if (dx < -50) { pageIndex = Math.min(1, pageIndex + 1); update(); }
-  });
-
-  // sostituisci il contenuto del menu
-  menu.innerHTML = '';
-  menu.appendChild(carousel);
-  // rendi i controlli più accessibili
-  left.setAttribute('aria-label', 'Previous page');
-  right.setAttribute('aria-label', 'Next page');
-  left.tabIndex = 0;
-  right.tabIndex = 0;
-  dot0.tabIndex = 0;
-  dot1.tabIndex = 0;
-
-  // keyboard support: left/right arrows to navigate, Escape to close
-  const keyHandler = (e) => {
-    if (e.key === 'ArrowLeft') { e.preventDefault(); pageIndex = Math.max(0, pageIndex - 1); update(); }
-    else if (e.key === 'ArrowRight') { e.preventDefault(); pageIndex = Math.min(1, pageIndex + 1); update(); }
-    else if (e.key === 'Escape') { menu.classList.remove('show'); }
-  };
-
-  // Make menu focusable and focus it so keyboard works
-  menu.tabIndex = -1;
-  menu.addEventListener('keydown', keyHandler);
-  // focus first control for immediate keyboard interaction
-  left.focus();
-
-  // osserva la rimozione della classe 'show' per ripristinare il contenuto originale e pulire listener
-  const mo = new MutationObserver((records) => {
-    for (const r of records) {
-      if (r.attributeName === 'class') {
-        if (!menu.classList.contains('show')) {
-          // pulisci listener e ripristina
-          try { menu.removeEventListener('keydown', keyHandler); } catch (err) {}
-          menu.tabIndex = null;
-          menu.innerHTML = menu._originalHTML || '';
-          mo.disconnect();
+    if (btnRight) {
+      btnRight.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (currentPage < maxPage) {
+          currentPage++;
+          updateCarousel();
         }
-      }
+      });
     }
-  });
-  mo.observe(menu, { attributes: true });
-}
+
+    if (btnLeft) {
+      btnLeft.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (currentPage > 0) {
+          currentPage--;
+          updateCarousel();
+        }
+      });
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentPage = index;
+        updateCarousel();
+      });
+    });
+});
