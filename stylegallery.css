@@ -48,7 +48,7 @@ a:hover {
   width: 100vw;
   height: 100vh;
   background: #000;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   color: white;
   display: flex;
@@ -59,7 +59,7 @@ a:hover {
 .viewport-inner {
   width: 100%;
   max-width: 177.78vh; /* Mantiene l'aspect ratio 16:9 */
-  aspect-ratio: 16 / 9;
+  /*aspect-ratio: 16 / 9;*/
 }
 
 .gallery {
@@ -120,8 +120,9 @@ a:hover {
 .carousel {
   display: none;
   width: 100%;
-  height: 100%; /* Coincide con il box della copertina */
+  height: 100%;
   position: relative;
+  overflow: hidden; /* THIS is what stops off-screen pages bleeding out */
 }
 
 .folder-visual.active .carousel {
@@ -137,8 +138,9 @@ a:hover {
 .carousel-track {
   display: flex;
   height: 100%;
-  transition: transform 0.3s ease-in-out; /* Aggiunge fluidità al movimento */
-  width: 100%; /* La larghezza base, flexbox gestirà l'espansione */
+  width: 100%;          /* explicit base width */
+  transition: transform 0.3s ease-in-out;
+  will-change: transform; /* smoother on mobile GPUs */
 }
 
 /* Page: Base comune per tutte le pagine */
@@ -259,18 +261,13 @@ a:hover {
 h1 { font-size: 2.5rem; color: #ffffff; margin-left: 10px; }
 h2 { font-size: 1.7rem; color: #000; margin: 10px 0; user-select: none; }
 
-.overlay-menu h3 {
-  font-size: clamp(1rem, 8vw, 6vw);
-  margin: 0;
-  color: #D4FF00;
-  line-height: 1.1;
-}
-
+.overlay-menu h3,
 .overlay-menu h4 {
-  font-size: clamp(1rem, 8vw, 6vw);
+  font-size: clamp(0.75rem, 2.5vw, 2rem);
   margin: 0;
   color: #D4FF00;
   line-height: 1.1;
+  overflow-wrap: break-word; /* prevents long words from escaping the box */
 }
 
 .containertesto {
@@ -319,23 +316,62 @@ h2 { font-size: 1.7rem; color: #000; margin: 10px 0; user-select: none; }
   to { transform: translateX(0); opacity: 1; }
 }
 
-@media (max-width: 660px) {
+@media (max-width: 768px) {  /* bumped from 660px — catches more phones */
   .folder {
     flex-direction: column;
     height: auto;
     aspect-ratio: auto;
+    overflow: visible; /* was hidden, which was clipping content */
   }
-  .folder-visual, .overlay-menu {
+  .folder-visual,
+  .overlay-menu {
     width: 100%;
   }
+
   .folder-visual {
-    aspect-ratio: 16/9;
+    aspect-ratio: 16 / 9;
+    overflow: hidden; /* keep this only on the visual, not the whole folder */
   }
+  .overlay-menu h3,
+  .overlay-menu h4 {
+    font-size: clamp(1rem, 5vw, 2rem); /* wider range for portrait screens */
+  }
+
   .container {
     flex-direction: column;
   }
+
   .menutext {
     text-align: center;
     margin-top: 15px;
+  }
+  .carousel-page {
+    padding: 4px;
+  }
+
+  .carousel-page.page-photos {
+    gap: 4px;
+  }
+
+  /* Fix 4: Shrink nav buttons so they don't cover content on narrow screens */
+  .carousel-nav {
+    width: 32px;
+    height: 32px;
+  }
+
+  .carousel-nav.left { left: 2px; }
+  .carousel-nav.right { right: 2px; }
+
+  /* Fix 5: Keep close button inside the visual box */
+  .close-carousel {
+    top: 4px;
+    right: 4px;
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Fix 6: Reduce video title so it doesn't push the iframe off screen */
+  .video-title {
+    font-size: 0.9rem;
   }
 }
