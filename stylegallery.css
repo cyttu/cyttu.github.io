@@ -58,8 +58,7 @@ a:hover {
 
 .viewport-inner {
   width: 100%;
-  max-width: 177.78vh; /* Mantiene l'aspect ratio 16:9 */
-  /*aspect-ratio: 16 / 9;*/
+  max-width: 177.78vh;
 }
 
 .gallery {
@@ -74,7 +73,6 @@ a:hover {
 .folder {
   display: flex;
   width: 100%;
-  aspect-ratio: 19 / 9; /* Forza la riga intera in 16/9 */
   position: relative;
   background: #000;
   overflow: hidden;
@@ -82,15 +80,13 @@ a:hover {
 
 .folder-visual {
   width: 70%;
-  height: 100%; /* Prende l'altezza del padre che è 16/9 */
+  aspect-ratio: 16 / 9;
   position: relative;
   overflow: hidden;
 }
 
-/* Lato Destro: Testo e Menu (30%) */
 .overlay-menu {
   width: 30%;
-  height: 100%;
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.8);
   display: flex;
@@ -101,13 +97,10 @@ a:hover {
 /* ==========================================================================
    4. COVER IMAGE & CAROUSEL LOGIC
    ========================================================================== */
-
-/* Immagine di Copertina */
 .cover-image {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Riempie il box 16/9 senza distorcere */
-  aspect-ratio: 16 / 9; 
+  object-fit: cover;
   display: block;
   cursor: pointer;
 }
@@ -116,60 +109,63 @@ a:hover {
   opacity: 0.9;
 }
 
-/* Carosello (Nascosto di default) */
+/* Absolutely positioned so it always fills folder-visual exactly */
 .carousel {
   display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  position: relative;
-  overflow: hidden; /* THIS is what stops off-screen pages bleeding out */
+  overflow: hidden;
 }
 
 .folder-visual.active .carousel {
   display: block;
 }
 
-/* Stato Attivo (Switch tra Copertina e Carosello) */
 .folder-visual.active .cover-image {
   display: none;
 }
 
-/* Track e Pagine del Carosello */
+/* Track */
 .carousel-track {
   display: flex;
+  width: 100%;
   height: 100%;
-  width: 100%;          /* explicit base width */
   transition: transform 0.3s ease-in-out;
-  will-change: transform; /* smoother on mobile GPUs */
+  will-change: transform;
 }
 
-/* Page: Base comune per tutte le pagine */
+/* Base page */
 .carousel-page {
-  min-width: 100%; /* FORZA la pagina ad essere larga quanto tutto il carosello */
+  min-width: 100%;
   width: 100%;
   height: 100%;
   padding: 10px;
   box-sizing: border-box;
-  flex-shrink: 0; /* Impedisce alle pagine di restringersi */
+  flex-shrink: 0;
 }
 
-/* --- LAYOUT PAGINA 1: Griglia 4 foto --- */
+/* --- PAGE 1: 4-photo grid --- */
 .carousel-page.page-photos {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 10px;
+  gap: 4px;
 }
 
 .carousel-page.page-photos img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Meglio cover per griglie uniformi, usa contain se non vuoi tagli */
   aspect-ratio: 16 / 9;
+  min-width: 0;  /* prevents grid blowout horizontally */
+  min-height: 0; /* prevents grid blowout vertically */
+  object-fit: cover;
   display: block;
 }
 
-/* --- LAYOUT PAGINA 2: Testo + Video --- */
+/* --- PAGE 2: Text + Video --- */
 .carousel-page.page-video {
   display: flex;
   flex-direction: column;
@@ -177,17 +173,10 @@ a:hover {
   gap: 15px;
 }
 
-.video-title {
-  color: #D4FF00;
-  font-size: 1.5rem;
-  margin: 0;
-  text-align: center;
-  font-family: 'initial', sans-serif;
-}
 
 .video-wrapper {
   width: 100%;
-  flex-grow: 1; /* Prende tutto lo spazio rimanente sotto il titolo */
+  flex-grow: 1;
   position: relative;
   background: #111;
   border-radius: 4px;
@@ -202,23 +191,34 @@ a:hover {
   height: 100%;
 }
 
-/* Navigazione UI */
+/* Navigation UI */
 .carousel-nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0,0,0,0.5);
+  background: radial-gradient(circle, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 70%);
   color: #fff;
   border: none;
-  width: 44px;
-  height: 44px;
+  width: 70px; 
+  height: 70px;
   cursor: pointer;
   z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  font-size: 1.1rem; 
+  font-weight: bold;
 }
 
-.carousel-nav.left { left: 8px; }
-.carousel-nav.right { right: 8px; }
-.carousel-nav:hover { background: #D4FF00; color: #000; }
+.carousel-nav.left  { left: 0; }
+.carousel-nav.right { right: 0; }
+
+.carousel-nav:hover {
+  /* Cambia il colore della freccia e intensifica lo sfohdo al passaggio del mouse */
+  background: radial-gradient(circle, rgba(212, 255, 0, 0.4) 0%, rgba(0,0,0,0) 70%);
+  color: #D4FF00;
+}
 
 .close-carousel {
   position: absolute;
@@ -251,8 +251,8 @@ a:hover {
   cursor: pointer;
 }
 
-.carousel-dots button.active { 
-  background: #D4FF00; 
+.carousel-dots button.active {
+  background: #D4FF00;
 }
 
 /* ==========================================================================
@@ -267,7 +267,7 @@ h2 { font-size: 1.7rem; color: #000; margin: 10px 0; user-select: none; }
   margin: 0;
   color: #D4FF00;
   line-height: 1.1;
-  overflow-wrap: break-word; /* prevents long words from escaping the box */
+  overflow-wrap: break-word;
 }
 
 .containertesto {
@@ -309,33 +309,60 @@ h2 { font-size: 1.7rem; color: #000; margin: 10px 0; user-select: none; }
    ========================================================================== */
 @keyframes fadeIn {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
 
 @keyframes slideIn {
   to { transform: translateX(0); opacity: 1; }
 }
 
-@media (max-width: 768px) {  /* bumped from 660px — catches more phones */
+@media (max-width: 768px), (orientation: portrait) {
+  .viewport-inner {
+    max-width: 100%;
+  }
+
   .folder {
     flex-direction: column;
     height: auto;
-    aspect-ratio: auto;
-    overflow: visible; /* was hidden, which was clipping content */
+    overflow: visible;
   }
-  .folder-visual,
+
+  .folder-visual {
+    width: 100%;
+  }
+
   .overlay-menu {
     width: 100%;
   }
 
-  .folder-visual {
-    aspect-ratio: 16 / 9;
-    overflow: hidden; /* keep this only on the visual, not the whole folder */
-  }
   .overlay-menu h3,
   .overlay-menu h4 {
-    font-size: clamp(1rem, 5vw, 2rem); /* wider range for portrait screens */
+    font-size: clamp(1rem, 5vw, 2rem);
   }
+
+  .carousel-page {
+    padding: 40px;
+  }
+
+  .carousel-page.page-photos {
+    gap: 4px;
+  }
+
+  .carousel-nav {
+    width: 32px;
+    height: 32px;
+  }
+
+  .carousel-nav.left  { left: 2px; }
+  .carousel-nav.right { right: 2px; }
+
+  .close-carousel {
+    top: 4px;
+    right: 4px;
+    width: 24px;
+    height: 24px;
+  }
+
 
   .container {
     flex-direction: column;
@@ -344,34 +371,5 @@ h2 { font-size: 1.7rem; color: #000; margin: 10px 0; user-select: none; }
   .menutext {
     text-align: center;
     margin-top: 15px;
-  }
-  .carousel-page {
-    padding: 4px;
-  }
-
-  .carousel-page.page-photos {
-    gap: 4px;
-  }
-
-  /* Fix 4: Shrink nav buttons so they don't cover content on narrow screens */
-  .carousel-nav {
-    width: 32px;
-    height: 32px;
-  }
-
-  .carousel-nav.left { left: 2px; }
-  .carousel-nav.right { right: 2px; }
-
-  /* Fix 5: Keep close button inside the visual box */
-  .close-carousel {
-    top: 4px;
-    right: 4px;
-    width: 24px;
-    height: 24px;
-  }
-
-  /* Fix 6: Reduce video title so it doesn't push the iframe off screen */
-  .video-title {
-    font-size: 0.9rem;
   }
 }
