@@ -181,6 +181,16 @@ a:hover {
   background: #111;
   border-radius: 4px;
   overflow: hidden;
+  /* center any embedded content such as Instagram blocks */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* instagram embed comes with inline margin; override and center it explicitly */
+.video-wrapper blockquote.instagram-media {
+  margin: 0 auto !important;
+  max-width: 100%;
 }
 
 .video-wrapper iframe {
@@ -325,6 +335,22 @@ h2 { font-size: 1.7rem; color: #000; margin: 10px 0; user-select: none; }
   flex-direction: column;
   text-align: right;
   font-weight: bold;
+}
+
+/* Lo scudo invisibile che copre il video per permettere lo swipe */
+.video-overlay-shield {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  background: transparent;
+}
+
+/* Quando l'utente clicca una volta, lo scudo scompare per permettere il Play */
+.video-overlay-shield.is-hidden {
+  display: none;
 }
 
 /* ==========================================================================

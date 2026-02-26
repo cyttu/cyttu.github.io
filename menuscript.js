@@ -2,18 +2,13 @@ document.querySelectorAll('.folder-visual').forEach(visualContainer => {
     const coverImage = visualContainer.querySelector('.cover-image');
     const closeBtn = visualContainer.querySelector('.close-carousel');
 
-    // 1. APERTURA: Se clicco sulla copertina
+    // 1. APERTURA
     if (coverImage) {
         coverImage.addEventListener('click', (e) => {
-            // Blocchiamo la propagazione (altrimenti il document listener chiuderebbe SUBITO quello che stiamo aprendo)
             e.stopPropagation(); 
-            
-            // Prima di aprirmi, cerco se c'è qualcun altro aperto e lo chiudo
-            document.querySelectorAll('.folder-visual.active').forEach(activeContainer => {
-                activeContainer.classList.remove('active');
+            document.querySelectorAll('.folder-visual.active').forEach(active => {
+                active.classList.remove('active');
             });
-
-            // Ora apro quello corrente
             visualContainer.classList.add('active');
         });
     }
@@ -23,75 +18,79 @@ document.querySelectorAll('.folder-visual').forEach(visualContainer => {
         closeBtn.addEventListener('click', (e) => {
             e.stopPropagation(); 
             visualContainer.classList.remove('active');
+            // Reset interattività video alla chiusura
+            visualContainer.querySelectorAll('.video-wrapper').forEach(vw => vw.classList.remove('is-interactable'));
         });
     }
 });
 
-// CHIUSURA (CLICK OUTSIDE): Gestione click fuori dal carosello
+// CHIUSURA (CLICK OUTSIDE)
 document.addEventListener('click', (e) => {
-    // Cerchiamo tutti i container attualmente aperti
     document.querySelectorAll('.folder-visual.active').forEach(activeContainer => {
-        // Se l'elemento cliccato (e.target) NON è dentro il container attivo
         if (!activeContainer.contains(e.target)) {
             activeContainer.classList.remove('active');
+            activeContainer.querySelectorAll('.video-wrapper').forEach(vw => vw.classList.remove('is-interactable'));
         }
     });
 });
 
-// GESTIONE NAVIGAZIONE CAROSELLO (Dinamico + Swipe Touch)
+// GESTIONE CAROSELLO
 document.querySelectorAll('.carousel').forEach(carousel => {
     const track = carousel.querySelector('.carousel-track');
-    // Prendo sia .dot che i bottoni in .carousel-dots per sicurezza, a seconda di come li hai nel HTML
     const dots = carousel.querySelectorAll('.dot, .carousel-dots button'); 
     const btnLeft = carousel.querySelector('.carousel-nav.left');
     const btnRight = carousel.querySelector('.carousel-nav.right');
+    const videoWrappers = carousel.querySelectorAll('.video-wrapper');
     
     if (!track) return;
 
-    // Contiamo quante pagine ci sono realmente nel HTML
     const pages = track.querySelectorAll('.carousel-page');
-    const maxPage = pages.length - 1; // Se ho 3 pagine, l'indice massimo è 2 (0, 1, 2)
+    const maxPage = pages.length - 1; 
     let currentPage = 0;
 
     function updateCarousel() {
-        // Spostamento visuale
         track.style.transform = `translateX(-${currentPage * 100}%)`;
       
-        // Aggiorna i pallini attivi (se presenti)
         dots.forEach((dot, index) => {
             if(dot) dot.classList.toggle('active', index === currentPage);
         });
       
-        // GESTIONE FRECCE: Scompaiono del tutto ai limiti (display none)
         if(btnLeft) btnLeft.style.display = currentPage === 0 ? 'none' : 'flex';
         if(btnRight) btnRight.style.display = currentPage === maxPage ? 'none' : 'flex';
+
+        // OGNI VOLTA CHE CAMBI PAGINA: 
+        // Disattiviamo l'interazione dei video per rendere di nuovo possibile lo swipe
+        videoWrappers.forEach(vw => vw.classList.remove('is-interactable'));
     }
 
-    // Inizializza stato frecce e pallini all'apertura
+    // GESTIONE CLICK SUI VIDEO PER ATTIVARLI
+    videoWrappers.forEach(wrapper => {
+        wrapper.addEventListener('click', (e) => {
+            // Al primo click, attiviamo il video e impediamo lo swipe
+            if (!wrapper.classList.contains('is-interactable')) {
+                e.stopPropagation();
+                wrapper.classList.add('is-interactable');
+            }
+        });
+    });
+
     updateCarousel();
 
-    // --- EVENTI CLICK FRECCE ---
+    // NAVIGAZIONE (Frecce e Dots)
     if (btnRight) {
         btnRight.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (currentPage < maxPage) {
-                currentPage++;
-                updateCarousel();
-            }
+            if (currentPage < maxPage) { currentPage++; updateCarousel(); }
         });
     }
 
     if (btnLeft) {
         btnLeft.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (currentPage > 0) {
-                currentPage--;
-                updateCarousel();
-            }
+            if (currentPage > 0) { currentPage--; updateCarousel(); }
         });
     }
 
-    // --- EVENTI CLICK PALLINI ---
     dots.forEach((dot, index) => {
         dot.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -100,7 +99,7 @@ document.querySelectorAll('.carousel').forEach(carousel => {
         });
     });
 
-    // --- SUPPORTO TOUCH / SWIPE SU MOBILE ---
+    // TOUCH SWIPE
     let startX = 0;
     let endX = 0;
 
@@ -112,14 +111,11 @@ document.querySelectorAll('.carousel').forEach(carousel => {
         endX = e.changedTouches[0].clientX;
         let diffX = startX - endX;
 
-        // Se lo swipe è più lungo di 50 pixel (evita micro-tocchi accidentali)
         if (Math.abs(diffX) > 50) {
             if (diffX > 0 && currentPage < maxPage) {
-                // Swipe a sinistra -> Prossima pagina
                 currentPage++;
                 updateCarousel();
             } else if (diffX < 0 && currentPage > 0) {
-                // Swipe a destra -> Pagina precedente
                 currentPage--;
                 updateCarousel();
             }
