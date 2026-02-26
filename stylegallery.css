@@ -164,7 +164,7 @@ a:hover {
   object-fit: cover;
   display: block;
 }
-
+ 
 /* --- PAGE 2: Text + Video --- */
 .carousel-page.page-video {
   display: flex;
@@ -172,8 +172,31 @@ a:hover {
   align-items: center;
   gap: 15px;
 }
+.homecontainer {
+  display: flex;
+  flex-direction: row; /* Le immagini ora sono affiancate */
+  gap: 0;             /* Di solito nei caroselli a tutto schermo il gap è 0 */
+  overflow-x: auto;   /* Abilita lo scroll orizzontale */
+  scroll-snap-type: x mandatory; /* Effetto calamita */
+  scroll-behavior: smooth;
+  width: 100%;
+  
+  /* Nasconde la scrollbar su Chrome/Safari/Firefox */
+  scrollbar-width: none; 
+  -ms-overflow-style: none;
+}
 
+.homecontainer::-webkit-scrollbar {
+  display: none;
+}
 
+.homecontainer img {
+  flex: 0 0 100%;      /* Ogni immagine occupa il 100% della larghezza */
+  width: 100%;
+  aspect-ratio: 16 / 9; /* Forza il rapporto 16:9 */
+  object-fit: cover;   /* Taglia l'immagine per riempire il rettangolo senza deformarsi */
+  scroll-snap-align: start; /* Punto di ancoraggio per la calamita */
+}
 .video-wrapper {
   width: 100%;
   flex-grow: 1;
@@ -181,6 +204,7 @@ a:hover {
   background: #111;
   border-radius: 4px;
   overflow: hidden;
+  align-items: center;
 }
 
 .video-wrapper iframe {
