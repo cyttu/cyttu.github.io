@@ -95,7 +95,7 @@ a:hover {
 }
 
 /* ==========================================================================
-   4. CAROUSEL LOGIC & MEDIA
+   4. COVER IMAGE & CAROUSEL LOGIC
    ========================================================================== */
 .cover-image {
   width: 100%;
@@ -109,6 +109,7 @@ a:hover {
   opacity: 0.9;
 }
 
+/* Absolutely positioned so it always fills folder-visual exactly */
 .carousel {
   display: none;
   position: absolute;
@@ -127,6 +128,7 @@ a:hover {
   display: none;
 }
 
+/* Track */
 .carousel-track {
   display: flex;
   width: 100%;
@@ -135,11 +137,13 @@ a:hover {
   will-change: transform;
 }
 
+/* Base page */
 .carousel-page {
   min-width: 100%;
   width: 100%;
   height: 100%;
   padding: 10px;
+  box-sizing: border-box;
   flex-shrink: 0;
 }
 
@@ -155,8 +159,8 @@ a:hover {
   width: 100%;
   height: 100%;
   aspect-ratio: 16 / 9;
-  min-width: 0;
-  min-height: 0;
+  min-width: 0;  /* prevents grid blowout horizontally */
+  min-height: 0; /* prevents grid blowout vertically */
   object-fit: cover;
   display: block;
 }
@@ -166,30 +170,9 @@ a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 15px;
 }
 
-.homecontainer {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.homecontainer::-webkit-scrollbar {
-  display: none;
-}
-
-.homecontainer img {
-  flex: 0 0 100%;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  scroll-snap-align: start;
-}
 
 .video-wrapper {
   width: 100%;
@@ -198,16 +181,6 @@ a:hover {
   background: #111;
   border-radius: 4px;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.video-wrapper iframe,
-.video-wrapper blockquote {
-  max-width: 560px;
-  width: 100%;
-  margin: 0 auto;
 }
 
 .video-wrapper iframe {
@@ -218,7 +191,30 @@ a:hover {
   height: 100%;
 }
 
-/* --- Navigation UI --- */
+/* Il contenitore principale */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Spinge il titolo a sinistra e le icone a destra */
+    align-items: center;           /* Allinea verticalmente il testo e le icone */
+    padding: 1rem 2rem;            /* Opzionale: aggiunge un po' di respiro ai lati */
+}
+
+/* Rimuove margini extra dal titolo per un allineamento perfetto */
+.navbar h1 {
+    margin: 0;
+}
+
+/* Il contenitore delle icone */
+.icons {
+    display: flex;
+    gap: 15px; /* Crea spazio tra un'icona e l'altra */
+}
+
+/* Opzionale: per rendere le icone responsive se necessario */
+.icons svg {
+    display: block;
+}
+/* Navigation UI */
 .carousel-nav {
   position: absolute;
   top: 50%;
@@ -242,6 +238,7 @@ a:hover {
 .carousel-nav.right { right: 0; }
 
 .carousel-nav:hover {
+  /* Cambia il colore della freccia e intensifica lo sfohdo al passaggio del mouse */
   background: radial-gradient(circle, rgba(212, 255, 0, 0.4) 0%, rgba(0,0,0,0) 70%);
   color: #D4FF00;
 }
@@ -282,36 +279,10 @@ a:hover {
 }
 
 /* ==========================================================================
-   5. UI COMPONENTS (Typography, Navbar, Icons, Bars)
+   5. UI COMPONENTS (Typography, Bars, Icons)
    ========================================================================== */
-h1 { 
-  font-size: 2.5rem; 
-  color: #ffffff; 
-  margin: 0 0 0 10px; 
-}
-
-h2 { 
-  font-size: 1.7rem; 
-  color: #000; 
-  margin: 10px 0; 
-  user-select: none; 
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-}
-
-.icons {
-  display: flex;
-  gap: 15px;
-}
-
-.icons svg {
-  display: block;
-}
+h1 { font-size: 2.5rem; color: #ffffff; margin-left: 10px; }
+h2 { font-size: 1.7rem; color: #000; margin: 10px 0; user-select: none; }
 
 .overlay-menu h3,
 .overlay-menu h4 {
@@ -379,7 +350,10 @@ h2 {
     overflow: visible;
   }
 
-  .folder-visual,
+  .folder-visual {
+    width: 100%;
+  }
+
   .overlay-menu {
     width: 100%;
   }
@@ -391,6 +365,10 @@ h2 {
 
   .carousel-page {
     padding: 5px;
+  }
+
+  .carousel-page.page-photos {
+    gap: 4px;
   }
 
   .carousel-nav {
@@ -408,27 +386,13 @@ h2 {
     height: 24px;
   }
 
-  .container,
-  .navbar {
-    flex-direction: column;
-  }
 
-  .navbar {
-    gap: 15px;
-    padding: 1rem;
+  .container {
+    flex-direction: column;
   }
 
   .menutext {
     text-align: center;
     margin-top: 15px;
-  }
-
-  .icons {
-    gap: 10px;
-  }
-
-  .icons svg {
-    width: 24px;
-    height: 24px;
   }
 }
