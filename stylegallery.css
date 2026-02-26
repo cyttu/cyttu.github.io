@@ -395,4 +395,18 @@ h2 { font-size: 1.7rem; color: #000; margin: 10px 0; user-select: none; }
     text-align: center;
     margin-top: 15px;
   }
+
+  .icons svg {
+    width: 24px;  /* Regola la larghezza come preferisci */
+    height: 24px; /* Regola l'altezza come preferisci */
+  }
+
+  .icons {
+    gap: 10px;    /* Riduce lo spazio tra le icone su schermi piccoli */
+  }
+  .navbar {
+    flex-direction: column; 
+    gap: 15px;
+    padding: 1rem;
+  }
 }
