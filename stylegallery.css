@@ -95,7 +95,7 @@ a:hover {
 }
 
 /* ==========================================================================
-   4. COVER IMAGE & CAROUSEL LOGIC
+   4. CAROUSEL LOGIC & MEDIA
    ========================================================================== */
 .cover-image {
   width: 100%;
@@ -109,7 +109,6 @@ a:hover {
   opacity: 0.9;
 }
 
-/* Absolutely positioned so it always fills folder-visual exactly */
 .carousel {
   display: none;
   position: absolute;
@@ -128,7 +127,6 @@ a:hover {
   display: none;
 }
 
-/* Track */
 .carousel-track {
   display: flex;
   width: 100%;
@@ -137,13 +135,11 @@ a:hover {
   will-change: transform;
 }
 
-/* Base page */
 .carousel-page {
   min-width: 100%;
   width: 100%;
   height: 100%;
   padding: 10px;
-  box-sizing: border-box;
   flex-shrink: 0;
 }
 
@@ -159,30 +155,27 @@ a:hover {
   width: 100%;
   height: 100%;
   aspect-ratio: 16 / 9;
-  min-width: 0;  /* prevents grid blowout horizontally */
-  min-height: 0; /* prevents grid blowout vertically */
+  min-width: 0;
+  min-height: 0;
   object-fit: cover;
   display: block;
 }
- 
+
 /* --- PAGE 2: Text + Video --- */
 .carousel-page.page-video {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
 }
+
 .homecontainer {
   display: flex;
-  flex-direction: row; /* Le immagini ora sono affiancate */
-  gap: 0;             /* Di solito nei caroselli a tutto schermo il gap è 0 */
-  overflow-x: auto;   /* Abilita lo scroll orizzontale */
-  scroll-snap-type: x mandatory; /* Effetto calamita */
-  scroll-behavior: smooth;
+  flex-direction: row;
   width: 100%;
-  
-  /* Nasconde la scrollbar su Chrome/Safari/Firefox */
-  scrollbar-width: none; 
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
@@ -191,12 +184,13 @@ a:hover {
 }
 
 .homecontainer img {
-  flex: 0 0 100%;      /* Ogni immagine occupa il 100% della larghezza */
+  flex: 0 0 100%;
   width: 100%;
-  aspect-ratio: 16 / 9; /* Forza il rapporto 16:9 */
-  object-fit: cover;   /* Taglia l'immagine per riempire il rettangolo senza deformarsi */
-  scroll-snap-align: start; /* Punto di ancoraggio per la calamita */
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  scroll-snap-align: start;
 }
+
 .video-wrapper {
   width: 100%;
   flex-grow: 1;
@@ -204,7 +198,16 @@ a:hover {
   background: #111;
   border-radius: 4px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
   align-items: center;
+}
+
+.video-wrapper iframe,
+.video-wrapper blockquote {
+  max-width: 560px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .video-wrapper iframe {
@@ -215,30 +218,7 @@ a:hover {
   height: 100%;
 }
 
-/* Il contenitore principale */
-.navbar {
-    display: flex;
-    justify-content: space-between; /* Spinge il titolo a sinistra e le icone a destra */
-    align-items: center;           /* Allinea verticalmente il testo e le icone */
-    padding: 1rem 2rem;            /* Opzionale: aggiunge un po' di respiro ai lati */
-}
-
-/* Rimuove margini extra dal titolo per un allineamento perfetto */
-.navbar h1 {
-    margin: 0;
-}
-
-/* Il contenitore delle icone */
-.icons {
-    display: flex;
-    gap: 15px; /* Crea spazio tra un'icona e l'altra */
-}
-
-/* Opzionale: per rendere le icone responsive se necessario */
-.icons svg {
-    display: block;
-}
-/* Navigation UI */
+/* --- Navigation UI --- */
 .carousel-nav {
   position: absolute;
   top: 50%;
@@ -262,7 +242,6 @@ a:hover {
 .carousel-nav.right { right: 0; }
 
 .carousel-nav:hover {
-  /* Cambia il colore della freccia e intensifica lo sfohdo al passaggio del mouse */
   background: radial-gradient(circle, rgba(212, 255, 0, 0.4) 0%, rgba(0,0,0,0) 70%);
   color: #D4FF00;
 }
@@ -303,10 +282,36 @@ a:hover {
 }
 
 /* ==========================================================================
-   5. UI COMPONENTS (Typography, Bars, Icons)
+   5. UI COMPONENTS (Typography, Navbar, Icons, Bars)
    ========================================================================== */
-h1 { font-size: 2.5rem; color: #ffffff; margin-left: 10px; }
-h2 { font-size: 1.7rem; color: #000; margin: 10px 0; user-select: none; }
+h1 { 
+  font-size: 2.5rem; 
+  color: #ffffff; 
+  margin: 0 0 0 10px; 
+}
+
+h2 { 
+  font-size: 1.7rem; 
+  color: #000; 
+  margin: 10px 0; 
+  user-select: none; 
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.icons {
+  display: flex;
+  gap: 15px;
+}
+
+.icons svg {
+  display: block;
+}
 
 .overlay-menu h3,
 .overlay-menu h4 {
@@ -374,10 +379,7 @@ h2 { font-size: 1.7rem; color: #000; margin: 10px 0; user-select: none; }
     overflow: visible;
   }
 
-  .folder-visual {
-    width: 100%;
-  }
-
+  .folder-visual,
   .overlay-menu {
     width: 100%;
   }
@@ -388,11 +390,7 @@ h2 { font-size: 1.7rem; color: #000; margin: 10px 0; user-select: none; }
   }
 
   .carousel-page {
-    padding: 40px;
-  }
-
-  .carousel-page.page-photos {
-    gap: 4px;
+    padding: 5px;
   }
 
   .carousel-nav {
@@ -410,9 +408,14 @@ h2 { font-size: 1.7rem; color: #000; margin: 10px 0; user-select: none; }
     height: 24px;
   }
 
-
-  .container {
+  .container,
+  .navbar {
     flex-direction: column;
+  }
+
+  .navbar {
+    gap: 15px;
+    padding: 1rem;
   }
 
   .menutext {
@@ -420,17 +423,12 @@ h2 { font-size: 1.7rem; color: #000; margin: 10px 0; user-select: none; }
     margin-top: 15px;
   }
 
-  .icons svg {
-    width: 24px;  /* Regola la larghezza come preferisci */
-    height: 24px; /* Regola l'altezza come preferisci */
+  .icons {
+    gap: 10px;
   }
 
-  .icons {
-    gap: 10px;    /* Riduce lo spazio tra le icone su schermi piccoli */
-  }
-  .navbar {
-    flex-direction: column; 
-    gap: 15px;
-    padding: 1rem;
+  .icons svg {
+    width: 24px;
+    height: 24px;
   }
 }
