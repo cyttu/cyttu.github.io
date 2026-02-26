@@ -191,6 +191,29 @@ a:hover {
   height: 100%;
 }
 
+/* Il contenitore principale */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Spinge il titolo a sinistra e le icone a destra */
+    align-items: center;           /* Allinea verticalmente il testo e le icone */
+    padding: 1rem 2rem;            /* Opzionale: aggiunge un po' di respiro ai lati */
+}
+
+/* Rimuove margini extra dal titolo per un allineamento perfetto */
+.navbar h1 {
+    margin: 0;
+}
+
+/* Il contenitore delle icone */
+.icons {
+    display: flex;
+    gap: 15px; /* Crea spazio tra un'icona e l'altra */
+}
+
+/* Opzionale: per rendere le icone responsive se necessario */
+.icons svg {
+    display: block;
+}
 /* Navigation UI */
 .carousel-nav {
   position: absolute;
