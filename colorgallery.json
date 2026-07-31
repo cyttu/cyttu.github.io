@@ -1,0 +1,115 @@
+{
+  "folders": [
+    {
+      "id": "il-molo-degli-inglesi",
+      "title": "il molo degli inglesi - Pallida Cavtat",
+      "cover": "source/color/pallida1.jpg",
+      "photos": [
+        { "src": "source/color/pallida2.jpg", "alt": "Foto 1" },
+        { "src": "source/color/pallida3.jpg", "alt": "Foto 2" },
+        { "src": "source/color/pallida4.jpg", "alt": "Foto 3" },
+        { "src": "source/color/pallida5.jpg", "alt": "Foto 4" }
+      ]
+    },
+    {
+      "id": "limoni",
+      "title": "Limoni",
+      "cover": "source/color/limoni1.jpg",
+      "photos": [
+        { "src": "source/color/limoni2.jpg", "alt": "Foto 1" },
+        { "src": "source/color/limoni3.jpg", "alt": "Foto 2" },
+        { "src": "source/color/limoni4.jpg", "alt": "Foto 3" },
+        { "src": "source/color/limoni5.jpg", "alt": "Foto 4" }
+      ]
+    },
+    {
+      "id": "consumarsi",
+      "title": "consumarsi",
+      "cover": "source/color/consumarsi1.jpg",
+      "photos": [
+        { "src": "source/color/consumarsi2.jpg", "alt": "Foto 1" },
+        { "src": "source/color/consumarsi3.jpg", "alt": "Foto 2" },
+        { "src": "source/color/consumarsi4.jpg", "alt": "Foto 3" },
+        { "src": "source/color/consumarsi5.jpg", "alt": "Foto 4" }
+      ]
+    },
+    
+    {
+      "id": "ricci",
+      "title": "Ricci - SoloMattia",
+      "cover": "source/color/ricci1.jpg",
+      "photos": [
+        { "src": "source/color/ricci2.jpg", "alt": "Foto 1" },
+        { "src": "source/color/ricci3.jpg", "alt": "Foto 2" },
+        { "src": "source/color/ricci4.jpg", "alt": "Foto 3" },
+        { "src": "source/color/ricci5.jpg", "alt": "Foto 4" }
+      ]
+    },
+    {
+      "id": "un-estate-umbra",
+      "title": "un'estate umbra",
+      "cover": "source/color/unestate1.jpg",
+      "photos": [
+        { "src": "source/color/unestate2.jpg", "alt": "Foto 1" },
+        { "src": "source/color/unestate3.jpg", "alt": "Foto 2" },
+        { "src": "source/color/unestate4.jpg", "alt": "Foto 3" },
+        { "src": "source/color/unestate5.jpg", "alt": "Foto 4" }
+      ]
+    },
+    {
+      "id": "poplar",
+      "title": "Poplar Fest Aftermovie",
+      "cover": "source/color/poplar1.jpg",
+      "photos": [
+        { "src": "source/color/poplar2.jpg", "alt": "Foto 1" },
+        { "src": "source/color/poplar3.jpg", "alt": "Foto 2" },
+        { "src": "source/color/poplar4.jpg", "alt": "Foto 3" },
+        { "src": "source/color/poplar5.jpg", "alt": "Foto 4" }
+      ]
+    },
+    {
+      "id": "flyaway",
+      "title": "Fly Away - Alucandra",
+      "cover": "source/color/flyaway1.jpg",
+      "photos": [
+        { "src": "source/color/flyaway2.jpg", "alt": "Foto 1" },
+        { "src": "source/color/flyaway3.jpg", "alt": "Foto 2" },
+        { "src": "source/color/flyaway4.jpg", "alt": "Foto 3" },
+        { "src": "source/color/flyaway5.jpg", "alt": "Foto 4" }
+      ]
+    },
+    {
+      "id": "teruns",
+      "title": "Terr*ni Spot",
+      "cover": "source/color/teruns1.jpg",
+      "photos": [
+        { "src": "source/color/teruns2.jpg", "alt": "Foto 1" },
+        { "src": "source/color/teruns3.jpg", "alt": "Foto 2" },
+        { "src": "source/color/teruns4.jpg", "alt": "Foto 3" },
+        { "src": "source/color/teruns5.jpg", "alt": "Foto 4" }
+      ]
+    },
+    {
+      "id": "middle-family",
+      "title": "Middle Family - Marc M Cogman",
+      "cover": "source/color/marc1.jpg",
+      "photos": [
+        { "src": "source/color/marc2.jpg", "alt": "Foto 1" },
+        { "src": "source/color/marc3.jpg", "alt": "Foto 2" },
+        { "src": "source/color/marc4.jpg", "alt": "Foto 3" },
+        { "src": "source/color/marc5.jpg", "alt": "Foto 4" }
+      ]
+    },
+    {
+      "id": "distaccati",
+      "title": "Distaccati - Francesco Cavestri",
+      "cover": "source/color/distaccati1.jpg",
+      "photos": [
+        { "src": "source/color/distaccati2.jpg", "alt": "Foto 1" },
+        { "src": "source/color/distaccati3.jpg", "alt": "Foto 2" },
+        { "src": "source/color/distaccati4.jpg", "alt": "Foto 3" },
+        { "src": "source/color/distaccati5.jpg", "alt": "Foto 4" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,458 @@
+/* ==========================================================================
+   1. GLOBAL & RESET
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'initial';
+  src: url('NeueKonstantGrotesk-Book.otf') format('opentype');
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  overflow: hidden;
+  min-width: 300px;
+}
+
+body {
+  font-family: 'initial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+a:hover {
+  text-decoration: underline;
+  text-decoration-color: #D4FF00;
+  text-decoration-thickness: 5px;
+  text-underline-offset: 6px;
+
+}
+
+.menutext a{
+text-decoration-color:#000000;
+}
+/* ==========================================================================
+   2. MAIN LAYOUT (Viewport & Containers)
+   ========================================================================== */
+.viewport {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  overflow-y: auto;
+  overflow-x: hidden;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  
+  scroll-padding-top: 100px; 
+}
+
+.viewport-inner {
+  width: 100%;
+  max-width: 177.78vh;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+
+/* ==========================================================================
+   3. FOLDER STRUCTURE (Row Setup)
+   ========================================================================== */
+.folder {
+  display: flex;
+  width: 100%;
+  position: relative;
+  background: #000;
+  overflow: hidden;
+}
+
+.folder-visual {
+  width: 70%;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay-menu {
+  width: 30%;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ==========================================================================
+   4. COVER IMAGE & CAROUSEL/GALLERY LOGIC
+   ========================================================================== */
+.cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
+}
+
+.cover-image:hover {
+  opacity: 0.9;
+}
+
+.carousel {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.folder-visual.active .carousel {
+  display: block;
+}
+
+.folder-visual.active .cover-image {
+  display: none;
+}
+
+/* Track */
+.carousel-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease-in-out;
+  will-change: transform;
+}
+
+/* Base page */
+.carousel-page {
+  min-width: 100%;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* --- PAGE 1: 4-photo grid --- */
+.carousel-page.page-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 4px;
+}
+
+.carousel-page.page-photos img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  min-width: 0;  /* prevents grid blowout horizontally */
+  min-height: 0; /* prevents grid blowout vertically */
+  object-fit: cover;
+  display: block;
+}
+
+
+/* Il contenitore principale Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;            
+  padding: 1rem 2rem;            
+  position: sticky;
+  top: 0;
+  z-index: 100; 
+  background-color: #000;
+}
+/* Rimuove margini extra dal titolo per un allineamento perfetto */
+.navbar h1 {
+    margin: 0;
+}
+
+/* Il contenitore delle icone */
+.icons {
+    display: flex;
+    gap: 15px; /* Crea spazio tra un'icona e l'altra */
+}
+
+/* Opzionale: per rendere le icone responsive se necessario */
+.icons svg {
+    display: block;
+}
+
+/* ==========================================================================
+   5. UI COMPONENTS (Typography, Bars, Icons)
+   ========================================================================== */
+h1 { font-size: 2.5rem; color: #ffffff; margin-left: 10px; }
+h2 { font-size: 1.7rem; color: #000; margin: 10px 0; user-select: none; }
+
+.overlay-menu h3,
+.overlay-menu h4 {
+  font-size: clamp(0.75rem, 2.5vw, 2rem);
+  margin: 0;
+  color: #D4FF00;
+  line-height: 1.1;
+  overflow-wrap: break-word;
+}
+
+.containertesto {
+  background-color: #D4FF00;
+  padding: 20px;
+  color: black;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.containerbarre {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.slash {
+  width: 6px;
+  height: 170px;
+  background-color: #000;
+  transform: rotate(20deg);
+}
+
+.menutext {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  font-weight: bold;
+  text-underline-offset: 6px;
+}
+/* ==========================================================================
+   6. FOOTER
+   ========================================================================== */
+#footer {
+  width: 100%;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+  margin-top: 20px;
+}
+
+#footer a {
+  color: #D4FF00; /* Colore in contrasto con lo sfondo nero */
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  border: 2px solid #D4FF00;
+  border-radius: 30px; /* Crea un bel bordo arrotondato a forma di bottone */
+  font-weight: bold;
+  text-transform: lowercase; /* Mantiene lo stile del tuo menu */
+}
+
+#footer a:hover {
+  background-color: #D4FF00;
+  color: #000;
+  text-decoration: none; /* Disabilita la sottolineatura spessa di default sui link al passaggio del mouse */
+}
+/* ==========================================================================
+   7. ANIMATIONS & RESPONSIVE
+   ========================================================================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideIn {
+  to { transform: translateX(0); opacity: 1; }
+} 
+
+@media (max-width: 768px), (orientation: portrait) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .icons svg{    
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+  }
+  
+  .viewport-inner {
+    max-width: 100%;
+  }
+
+  .folder {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+
+  .folder-visual {
+    width: 100%;
+  }
+
+  .overlay-menu {
+    width: 100%;
+  }
+
+  .overlay-menu h3,
+  .overlay-menu h4 {
+    font-size: clamp(1rem, 5vw, 2rem);
+  }
+
+  .carousel-page {
+    padding: 5px;
+  }
+
+  .carousel-page.page-photos {
+    gap: 4px;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+
+  .menutext {
+    text-align: center;
+    margin-top: 15px;
+  }
+}
+/* ==========================================================================
+   7. HORIZONTAL PHOTO SCROLLING
+   ========================================================================== */
+.horizontal-photo-wrapper {
+  width: 100%;
+  height: 60vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: grab;
+  background: #000;
+}
+
+.horizontal-photo-wrapper.active {
+  cursor: grabbing;
+}
+
+.horizontal-photo {
+  height: 100%;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Hide scrollbar while keeping functionality */
+.horizontal-photo-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.horizontal-photo-wrapper::-webkit-scrollbar-track {
+  background: #111;
+}
+
+.horizontal-photo-wrapper::-webkit-scrollbar-thumb {
+  background: #666;
+  border-radius: 4px;
+}
+
+.horizontal-photo-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+@media (max-width: 768px), (orientation: portrait) {
+  
+  /* --- 1. COERENZA NAVBAR (Titolo e Icone) --- */
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Aggiunge respiro tra il nome e le icone quando si incollonnano */
+    padding: 1rem;
+  }
+  
+  /* Rimpicciolisce il titolo in proporzione alle icone */
+  h1 { 
+    font-size: 1.8rem; /* Ridotto rispetto al 2.5rem originale */
+    margin: 0;
+    text-align: center;
+  }
+
+  .icons {
+    gap: 25px; /* Aumenta leggermente lo spazio tra le icone su mobile per facilitare il tap */
+  }
+  
+  .icons svg {    
+    width: 40px;
+    height: 40px;
+  }
+  
+  /* --- 2. COERENZA MENU (Voci di navigazione) --- */
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .menutext {
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  /* Rimpicciolisce i testi del menu ("color grading", ecc.) */
+  h2 {
+    font-size: 1.3rem; /* Ridotto rispetto all'1.7rem originale */
+    margin: 8px 0;
+  }
+
+  /* --- 3. RESTO DELLE REGOLE MOBILE (già presenti nel tuo file) --- */
+  .viewport-inner {
+    max-width: 100%;
+  }
+
+  .folder {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+
+  .folder-visual {
+    width: 100%;
+  }
+
+  .overlay-menu {
+    width: 100%;
+  }
+
+  .overlay-menu h3,
+  .overlay-menu h4 {
+    font-size: clamp(1rem, 5vw, 2rem);
+  }
+
+  .carousel-page {
+    padding: 5px;
+  }
+
+  .carousel-page.page-photos {
+    gap: 4px;
+  }
+}

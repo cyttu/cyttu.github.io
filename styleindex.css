@@ -1,0 +1,500 @@
+/* ==========================================================================
+   0. VARIABLES
+   ========================================================================== */
+:root {
+  --primary-color: #D4FF00; /* Neon yellow accent */
+  --bg-color: #000000;
+  --text-color: #ffffff;
+  --font-family: 'NeueKonstantGrotesk', sans-serif;
+}
+
+/* ==========================================================================
+   1. GLOBAL & RESET
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'NeueKonstantGrotesk'; 
+  src: url('NeueKonstantGrotesk-Book.otf') format('opentype');
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-color);
+  overflow: hidden;
+  min-width: 300px;
+}
+
+body {
+  font-family: var(--font-family);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--primary-color);
+  text-decoration-thickness: 5px;
+  text-underline-offset: 6px;
+
+}
+.menutext a{
+text-decoration-color:#000000;
+}
+/* ==========================================================================
+   2. TYPOGRAPHY & NAVBAR
+   ========================================================================== */
+h1 { 
+  font-size: 2.5rem; 
+  color: var(--text-color); 
+  margin: 0; 
+}
+
+h2 { 
+  font-size: 1.7rem; 
+  color: var(--bg-color); 
+  margin: 10px 0; 
+  user-select: none; 
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;            
+  padding: 1rem 2rem;            
+  position: sticky;
+  top: 0;
+  z-index: 100; 
+  background-color: var(--bg-color);
+}
+
+.icons {
+  display: flex;
+  gap: 15px;
+}
+
+.icons svg {
+  display: block;
+}
+
+/* ==========================================================================
+   3. MAIN LAYOUT
+   ========================================================================== */
+.viewport {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-color);
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.viewport-inner {
+  width: 100%;
+  max-width: 177.78vh; /* 16:9 aspect ratio constraint */
+}
+
+/* ==========================================================================
+   4. MENU & SLASHES (containertesto)
+   ========================================================================== */
+.containertesto {
+  background-color: var(--primary-color);
+  padding: 20px;
+  color: var(--bg-color);
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.containerbarre {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.slash {
+  width: 6px;
+  height: 170px;
+  background-color: var(--bg-color);
+  transform: rotate(20deg);
+}
+
+.menutext {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  font-weight: bold;
+  text-underline-offset: 6px;
+}
+
+/* ==========================================================================
+   5. GALLERY & VIDEO LOGIC
+   ========================================================================== */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.folder {
+  display: flex;
+  width: 100%;
+  position: relative;
+  background: var(--bg-color);
+  overflow: hidden;
+}
+
+.overlay-menu {
+  width: 30%;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 5;
+}
+
+.overlay-menu h3 {
+  font-size: clamp(0.75rem, 2.5vw, 2rem);
+  margin: 0;
+  color: var(--primary-color);
+  line-height: 1.1;
+  overflow-wrap: break-word;
+}
+
+.folder-visual {
+  position: relative;
+  width: 100%; 
+  display: flex;
+  flex-direction: column; 
+  overflow: hidden;
+  justify-content: center; 
+  align-items: center;
+}
+
+.cover-image {
+  width: 100%;
+  height: auto; 
+  aspect-ratio: 16 / 9; 
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0; 
+}
+
+img.cover-image:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.custom-play-btn {
+  position: absolute;
+  background: none;
+  border: none;  
+  width: 80px;   
+  height: 80px;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  padding: 0;
+}
+
+.custom-play-btn:hover {
+  transform: scale(1.1);
+}
+
+.custom-play-btn svg {
+  width: 200px;
+  height: 200px;
+  display: block;
+}
+
+.custom-play-btn.is-playing {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.folder-visual:hover .custom-play-btn.is-playing {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.custom-mute-btn {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.4); 
+  border: none; 
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  padding: 0;
+  transition: opacity 0.3s, background-color 0.2s;
+  opacity: 0.7; 
+}
+
+.custom-mute-btn:hover {
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 1;
+}
+
+.custom-mute-btn svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   6. FOOTER 
+   ========================================================================== */
+.site-footer {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr; 
+  gap: 40px; 
+  padding: 60px 40px 80px 60px; 
+  width: 100%;
+  background: var(--bg-color); 
+}
+
+.footer-portrait {
+  width: 120px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10%; 
+  flex-shrink: 0;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 5px; 
+}
+
+.footer-subheading {
+  text-align: right;
+  font-weight: normal; 
+  margin: 0;
+  color: var(--primary-color);
+  font-size: clamp(0.6rem, 1.3vw, 0.9rem); 
+  text-transform: lowercase;
+}
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; 
+  align-self: flex-end;  
+  margin: 0;
+  color: #757575;
+  font-size: clamp(0.66rem, 1.6vw, 1.2rem);
+  line-height: 1.4; 
+  
+}
+
+.footer-links a {
+  display: flex;
+  justify-content: space-between; 
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s ease;
+}
+
+.footer-links a:hover {
+  opacity: 0.7;
+}
+.footer-links a span {
+  text-decoration: underline;
+}
+
+.footer-links a::before {
+  content: ">";
+  margin-right: 12px; 
+}
+.footer-roles {
+  font-weight: normal; 
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  margin: 0;
+  color: #757575;
+  font-size: clamp(0.66rem, 1.6vw, 1.2rem);
+  line-height: 1.4; 
+}
+
+/* ==========================================================================
+   7. CAROUSEL/GALLERY LOGIC 
+   ========================================================================== */
+.carousel {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.folder-visual.active .carousel { display: block; }
+.folder-visual.active .cover-image { display: none; }
+
+.carousel-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease-in-out;
+  will-change: transform;
+}
+
+.carousel-page {
+  min-width: 100%;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  flex-shrink: 0;
+}
+
+.carousel-page.page-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 4px;
+}
+
+.carousel-page.page-photos img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  min-width: 0;
+  min-height: 0;
+  object-fit: cover;
+  display: block;
+}
+
+/* ==========================================================================
+   8. ANIMATIONS & RESPONSIVE
+   ========================================================================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideIn {
+  to { transform: translateX(0); opacity: 1; }
+} 
+
+@media (max-width: 768px), (orientation: portrait) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; 
+    padding: 1rem;
+  }
+   h1 { 
+    font-size: 1.8rem; 
+    margin: 0;
+    text-align: center;
+  }
+  h2 {
+    font-size: 1.3rem; 
+    margin: 8px 0;
+  }
+  .icons {
+    gap: 25px; 
+  }
+  .icons svg {    
+    width: 40px;
+    height: 40px;
+  }
+  
+  .viewport-inner { max-width: 100%; }
+.container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .folder {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+
+  .folder-visual, .overlay-menu {
+    width: 100%;
+  }
+
+  .overlay-menu h3,
+  .overlay-menu h4 {
+    font-size: clamp(1rem, 5vw, 2rem);
+  }
+
+  .carousel-page { padding: 5px; }
+  .carousel-page.page-photos { gap: 4px; }
+  .container { flex-direction: column; }
+  
+  .menutext {
+    text-align: center;
+    margin-top: 15px;
+  }
+  
+ .site-footer {
+    display: grid !important;
+    grid-template-columns: auto 1fr !important; 
+    gap: 20px;
+    align-items: start;
+  }
+
+  .footer-portrait {
+    grid-column: 1 !important; 
+    grid-row: 1 / span 2 !important;
+    max-width: 150px;
+  }
+
+  .footer-content:nth-of-type(1) {
+    grid-column: 2 !important; 
+    grid-row: 1 !important; 
+    margin: 0 !important;
+    text-align: right;
+  }
+
+  .footer-content:nth-of-type(2) {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    margin: 0 !important;
+  }
+
+  .footer-content {
+    grid-column: 1; 
+  }
+}
